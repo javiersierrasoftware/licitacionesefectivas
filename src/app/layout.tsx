@@ -14,17 +14,20 @@ export const metadata: Metadata = {
   description: "Portal de servicios de licitaciones y contratación con el estado.",
 };
 
-export default function RootLayout({
+import { auth } from "@/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="es">
       <body
         className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar />
+        <Navbar session={session} />
         <main className="flex-1">
           {children}
         </main>

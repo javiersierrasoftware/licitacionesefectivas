@@ -14,7 +14,12 @@ const navLinks = [
     { name: "Contacto", href: "#contacto" },
 ];
 
-export function Navbar() {
+import type { Session } from "next-auth";
+import { logout } from "@/lib/actions";
+
+// ... previous imports
+
+export function Navbar({ session }: { session: Session | null }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -38,9 +43,20 @@ export function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <Button variant="default" size="sm">
-                        Portal Clientes
-                    </Button>
+                    {session ? (
+                        <div className="flex items-center gap-2">
+                            <Button variant="default" size="sm" asChild>
+                                <Link href="/dashboard">Ir al Dashboard</Link>
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => logout()} className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                                Salir
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button variant="default" size="sm" asChild>
+                            <Link href="/login">Portal Clientes</Link>
+                        </Button>
+                    )}
                 </div>
 
                 {/* Mobile Menu Toggle */}
@@ -74,7 +90,20 @@ export function Navbar() {
                                     {link.name}
                                 </Link>
                             ))}
-                            <Button className="w-full">Portal Clientes</Button>
+                            {session ? (
+                                <>
+                                    <Button className="w-full" asChild>
+                                        <Link href="/dashboard" onClick={() => setIsOpen(false)}>Ir al Dashboard</Link>
+                                    </Button>
+                                    <Button variant="ghost" className="w-full text-red-500 hover:bg-red-50" onClick={() => { logout(); setIsOpen(false); }}>
+                                        Cerrar Sesión
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button className="w-full" asChild>
+                                    <Link href="/login" onClick={() => setIsOpen(false)}>Portal Clientes</Link>
+                                </Button>
+                            )}
                         </div>
                     </motion.div>
                 )}
