@@ -40,14 +40,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, asChild = false, ...props }, ref) => {
-        // Basic Slot support if we install @radix-ui/react-slot
-        // If not, we can just use "button" or implement basic polymorphism
-        // For now, I'll comment out Slot usage unless I install it. 
-        // Plan: I'll simple assume standard button behavior, but for "asChild" to work deeply I'd need the library.
-        // I'll skip Slot for now to avoid extra deps if not critical, but standard ui uses it. 
-        // Actually, Slot is very useful. I'll stick to basic <button> for now to save time, unless required.
-        // I'll remove asChild logic for simplicity in this iteration or just render 'button'.
-        const Comp = "button"
+        const Comp = asChild ? Slot : "button"
         return (
             <Comp
                 className={cn(buttonVariants({ variant, size, className }))}

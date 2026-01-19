@@ -1,23 +1,21 @@
 import Link from "next/link";
 import { LayoutDashboard, Users, FileText, Settings, LogOut, CheckSquare } from "lucide-react";
 import { LogoutButton } from "@/components/ui/LogoutButton";
+import { AdminLink } from "@/components/ui/AdminLink";
 
-export default function DashboardLayout({
+import { auth } from "@/auth";
+
+export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const session = await auth();
+
     return (
         <div className="flex h-screen bg-gray-100">
             {/* Sidebar */}
-            <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-                <div className="p-6 h-16 flex items-center border-b border-gray-100">
-                    <Link href="/dashboard">
-                        <span className="text-xl font-bold text-primary tracking-tight">
-                            Licitaciones<span className="text-secondary">.app</span>
-                        </span>
-                    </Link>
-                </div>
+            <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col pt-6">
 
                 <nav className="flex-1 p-4 space-y-2">
                     <Link
@@ -27,6 +25,8 @@ export default function DashboardLayout({
                         <LayoutDashboard className="h-5 w-5" />
                         <span className="font-medium">Resumen</span>
                     </Link>
+
+                    {/* ... other links ... */}
 
                     <Link
                         href="/dashboard/opportunities"
@@ -51,6 +51,8 @@ export default function DashboardLayout({
                         <Settings className="h-5 w-5" />
                         <span className="font-medium">Configuración</span>
                     </Link>
+
+                    <AdminLink userEmail={session?.user?.email} />
                 </nav>
 
                 <div className="p-4 border-t border-gray-100">
@@ -62,7 +64,8 @@ export default function DashboardLayout({
             <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Mobile Header (simplified) */}
                 <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 md:hidden">
-                    <span className="font-bold text-primary">Licitaciones.app</span>
+                    {/* Mobile Branding removed to avoid duplication with Navbar */}
+                    <div />
                     {/* Mobile menu trigger would go here */}
                 </header>
 

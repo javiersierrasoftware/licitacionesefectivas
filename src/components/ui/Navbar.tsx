@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils"; // Unused
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
     { name: "Inicio", href: "/" },
+    { name: "Planes", href: "/planes" },
     { name: "Servicios", href: "#servicios" },
     { name: "Nosotros", href: "#nosotros" },
     { name: "Contacto", href: "#contacto" },
@@ -17,10 +19,10 @@ const navLinks = [
 import type { Session } from "next-auth";
 import { logout } from "@/lib/actions";
 
-// ... previous imports
-
 export function Navbar({ session }: { session: Session | null }) {
     const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
+    const isDashboard = pathname?.startsWith("/dashboard");
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -37,7 +39,13 @@ export function Navbar({ session }: { session: Session | null }) {
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
-                            href={link.href}
+                            href={
+                                pathname === "/"
+                                    ? link.href
+                                    : link.href.startsWith("/")
+                                        ? link.href
+                                        : `/${link.href}`
+                            }
                             className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                         >
                             {link.name}
@@ -45,10 +53,16 @@ export function Navbar({ session }: { session: Session | null }) {
                     ))}
                     {session ? (
                         <div className="flex items-center gap-2">
-                            <Button variant="default" size="sm" asChild>
-                                <Link href="/dashboard">Ir al Dashboard</Link>
-                            </Button>
-                            <Button variant="ghost" size="sm" onClick={() => logout()} className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                            {isDashboard ? (
+                                <Button variant="default" size="sm" asChild>
+                                    <Link href="/dashboard/profile">Mi Perfil</Link>
+                                </Button>
+                            ) : (
+                                <Button variant="default" size="sm" asChild>
+                                    <Link href="/dashboard">Ir al Dashboard</Link>
+                                </Button>
+                            )}
+                            <Button variant="outline" size="sm" onClick={() => logout()} className="hover:bg-red-50 hover:text-red-600">
                                 Salir
                             </Button>
                         </div>
@@ -59,7 +73,7 @@ export function Navbar({ session }: { session: Session | null }) {
                     )}
                 </div>
 
-                {/* Mobile Menu Toggle */}
+                {/* Mobile Menu Toggle - Only show if there are links to show or if we want mobile access to profile/logout */}
                 <div className="md:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
@@ -83,7 +97,7 @@ export function Navbar({ session }: { session: Session | null }) {
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
-                                    href={link.href}
+                                    href={pathname === "/" ? link.href : `/${link.href}`}
                                     className="text-sm font-medium text-foreground hover:text-primary"
                                     onClick={() => setIsOpen(false)}
                                 >
@@ -92,10 +106,16 @@ export function Navbar({ session }: { session: Session | null }) {
                             ))}
                             {session ? (
                                 <>
-                                    <Button className="w-full" asChild>
-                                        <Link href="/dashboard" onClick={() => setIsOpen(false)}>Ir al Dashboard</Link>
-                                    </Button>
-                                    <Button variant="ghost" className="w-full text-red-500 hover:bg-red-50" onClick={() => { logout(); setIsOpen(false); }}>
+                                    {isDashboard ? (
+                                        <Button className="w-full" variant="default" asChild>
+                                            <Link href="/dashboard/profile" onClick={() => setIsOpen(false)}>Mi Perfil</Link>
+                                        </Button>
+                                    ) : (
+                                        <Button className="w-full" asChild>
+                                            <Link href="/dashboard" onClick={() => setIsOpen(false)}>Ir al Dashboard</Link>
+                                        </Button>
+                                    )}
+                                    <Button variant="outline" className="w-full hover:bg-red-50 hover:text-red-600" onClick={() => { logout(); setIsOpen(false); }}>
                                         Cerrar Sesión
                                     </Button>
                                 </>

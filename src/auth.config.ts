@@ -10,10 +10,14 @@ export const authConfig = {
             const isLoggedIn = !!auth?.user;
             const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
 
+            // Protect Dashboard routes
             if (isOnDashboard) {
                 if (isLoggedIn) return true;
                 return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn && (nextUrl.pathname === '/login' || nextUrl.pathname === '/register')) {
+            }
+
+            // Redirect logged-in users away from auth pages
+            if (isLoggedIn && (nextUrl.pathname === '/login' || nextUrl.pathname === '/register')) {
                 return Response.redirect(new URL('/dashboard', nextUrl));
             }
 

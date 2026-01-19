@@ -13,7 +13,7 @@ const CompanyProfileSchema = new mongoose.Schema({
     },
     nit: {
         type: String,
-        required: true,
+        required: false, // Explicitly false
     },
     address: String,
     phone: String,

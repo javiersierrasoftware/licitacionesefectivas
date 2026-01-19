@@ -23,6 +23,21 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    // Subscription Fields
+    planId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Plan',
+        default: null,
+    },
+    subscriptionStatus: {
+        type: String,
+        enum: ['active', 'inactive', 'past_due'],
+        default: 'inactive',
+    },
+    subscriptionEndDate: {
+        type: Date,
+        default: null,
+    },
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

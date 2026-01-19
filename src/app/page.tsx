@@ -1,8 +1,26 @@
 import { Hero } from "@/components/ui/Hero";
 import { ServiceCard } from "@/components/ui/ServiceCard";
+import { PlansSection } from "@/components/ui/PlansSection";
 import { Search, Shield, TrendingUp, Users } from "lucide-react";
+import dbConnect from "@/lib/db";
+import Plan from "@/lib/models/plan";
 
-export default function Home() {
+export default async function Home() {
+  await dbConnect();
+
+  // Fetch active plans, sorted by order
+  const plans = await Plan.find({ isActive: true }).sort({ order: 1 }).lean();
+
+  const formattedPlans = plans.map(plan => ({
+    _id: plan._id.toString(),
+    name: plan.name,
+    price: plan.price,
+    description: plan.description,
+    features: plan.features,
+    color: plan.color,
+    buttonVariant: plan.buttonVariant
+  }));
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -44,6 +62,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Plans Section */}
+      <PlansSection plans={formattedPlans.length > 0 ? formattedPlans : undefined} />
 
       {/* Trust/Stats Section */}
       <section id="nosotros" className="py-20 bg-white">
