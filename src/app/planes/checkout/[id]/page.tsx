@@ -46,7 +46,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
     // Generate a reference with embedded metadata for Webhook parsing
     // Format: PAY_userId_planId_timestamp
     // NOTE: session.user.id is required. If not strictly typed, ensure session exists.
-    const userId = session?.user?.id || session?.user?._id || "guest";
+    const userId = session?.user?.id || "guest";
     const reference = `PAY_${userId}_${plan._id}_${Date.now()}`;
     const publicKey = process.env.NEXT_PUBLIC_WOMPI_PUB_KEY || process.env.NEXT_PUBLIC_WOMPI_PUBLIC_KEY || "pub_test_XXXXXX";
 
