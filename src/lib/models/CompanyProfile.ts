@@ -26,6 +26,41 @@ const CompanyProfileSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    // New fields for Wizard Flow
+    profileName: {
+        type: String,
+        required: false, // Optional for now to support legacy
+    },
+    sectors: {
+        type: [String], // e.g., ["Public", "Private"]
+        default: [],
+    },
+    departments: {
+        type: [String], // e.g., ["Antioquia", "Cundinamarca"]
+        default: [],
+    },
+    preferences: {
+        emailNotifications: { type: Boolean, default: true }, // Legacy
+        historyStart: { type: Date },
+    },
+    // Enhanced Notification Settings
+    notificationSettings: {
+        enabled: { type: Boolean, default: true },
+        frequency: {
+            type: String,
+            enum: ['daily', 'weekly', 'realtime'],
+            default: 'daily',
+        },
+        triggers: {
+            newOpportunities: { type: Boolean, default: true },
+            statusChanges: { type: Boolean, default: true },
+            expiring: { type: Boolean, default: false },
+        },
+        channels: {
+            email: { type: Boolean, default: true },
+            whatsapp: { type: Boolean, default: false },
+        }
+    }
 });
 
 export default mongoose.models.CompanyProfile || mongoose.model('CompanyProfile', CompanyProfileSchema);

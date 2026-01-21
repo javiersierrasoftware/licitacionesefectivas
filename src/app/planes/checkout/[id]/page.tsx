@@ -59,6 +59,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
         const chain = `${reference}${amountInCents}${currency}${integritySecret}`;
         const crypto = require('crypto');
         integritySignature = crypto.createHash('sha256').update(chain).digest('hex');
+        console.log("DEBUG WOMPI:", { reference, amountInCents, currency, integritySecret, chain, integritySignature, publicKey, id: plan._id });
     }
 
     return (
@@ -126,21 +127,14 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
                                         </div>
                                     </div>
 
+                                    {/* PROVISIONAL BYPASS BUTTON */}
                                     <div className="space-y-4">
-                                        <div className="text-xs text-justify text-gray-500 bg-gray-50 p-3 rounded border">
-                                            <p className="font-semibold mb-1">Términos y Condiciones:</p>
-                                            Al continuar con el pago, aceptas que el servicio se activará inmediatamente después de la confirmación del banco.
-                                            La suscripción es mensual y puedes cancelarla en cualquier momento desde tu panel de control.
+                                        <div className="text-xs text-justify text-amber-700 bg-amber-50 p-3 rounded border border-amber-200">
+                                            <p className="font-semibold mb-1">Modo Provisional:</p>
+                                            Debido a intermitencia en la pasarela de pagos, puedes activar tu plan temporalmente sin costo inmediato.
                                         </div>
 
-                                        <WompiButton
-                                            planName={plan.name}
-                                            amountInCents={amountInCents}
-                                            reference={reference}
-                                            publicKey={publicKey}
-                                            signature={integritySignature}
-                                            redirectUrl={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard?payment=success`}
-                                        />
+                                        <ManualActivationButton planId={plan._id.toString()} />
                                     </div>
                                 </CardContent>
                             </Card>
@@ -151,5 +145,27 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
 
             {/* Footer handled by layout */}
         </div>
+    );
+}
+
+// Small client component for the button to access the action
+import { activateManualSubscription } from "@/lib/actions/subscription";
+
+function ManualActivationButton({ planId }: { planId: string }) {
+    return (
+        <form action={async () => {
+            "use server";
+            await activateManualSubscription(planId);
+        }}>
+            <button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 text-lg h-auto shadow-lg rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+                Confirmar y Activar Plan
+            </button>
+            <p className="text-xs text-center mt-2 text-muted-foreground">
+                Acceso inmediato por 30 días
+            </p>
+        </form>
     );
 }

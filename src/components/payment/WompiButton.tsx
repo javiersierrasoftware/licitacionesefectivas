@@ -13,29 +13,51 @@ interface WompiButtonProps {
 }
 
 export function WompiButton({ planName, amountInCents, reference, publicKey, redirectUrl, signature }: WompiButtonProps) {
-    // Generate a unique reference if not provided or ensure it's unique
-    // For now we trust the passed reference (e.g., PLAN-ID-TIMESTAMP)
+
+    useEffect(() => {
+        const form = document.getElementById('wompi-form');
+        if (form && !form.querySelector('script')) {
+            const script = document.createElement('script');
+            script.src = "https://checkout.wompi.co/widget.js";
+            script.setAttribute("data-render", "button");
+            script.setAttribute("data-public-key", publicKey);
+            script.setAttribute("data-currency", "COP");
+            script.setAttribute("data-amount-in-cents", amountInCents.toString());
+            script.setAttribute("data-reference", reference);
+
+            if (signature) {
+                script.setAttribute("data-signature:integrity", signature);
+            }
+
+            if (redirectUrl) {
+                script.setAttribute("data-redirect-url", redirectUrl);
+            }
+
+            form.appendChild(script);
+        }
+    }, [amountInCents, publicKey, reference, redirectUrl, signature]);
 
     return (
-        <form action="https://checkout.wompi.co/p/" method="GET">
-            {/* Essential Wompi Parameters */}
-            <input type="hidden" name="public-key" value={publicKey} />
-            <input type="hidden" name="currency" value="COP" />
-            <input type="hidden" name="amount-in-cents" value={amountInCents} />
-            <input type="hidden" name="reference" value={reference} />
-
-            {/* Integrity Signature (Required if Integrity Key is set in Wompi Dashboard) */}
-            {signature && <input type="hidden" name="signature:integrity" value={signature} />}
-
-            {/* Optional / User Experience */}
-            {redirectUrl && <input type="hidden" name="redirect-url" value={redirectUrl} />}
-
-            <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 text-lg h-auto shadow-lg"
-            >
-                Pagar con Wompi
-            </Button>
+        <form id="wompi-form">
+            {/* The widget will inject the button here */}
+            <style jsx global>{`
+                .wompi-button {
+                    background-color: #2563eb !important; /* blue-600 */
+                    color: white !important;
+                    font-weight: bold !important;
+                    padding: 12px 24px !important;
+                    border-radius: 8px !important;
+                    width: 100% !important;
+                    font-size: 1.125rem !important; /* text-lg */
+                    border: none !important;
+                    cursor: pointer !important;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+                    transition: background-color 0.2s !important;
+                }
+                .wompi-button:hover {
+                    background-color: #1d4ed8 !important; /* blue-700 */
+                }
+            `}</style>
             <p className="text-xs text-center mt-2 text-muted-foreground">
                 Pagos seguros procesados por Bancolombia / Wompi
             </p>

@@ -73,6 +73,11 @@ export async function register(
             unspscCodes: [], // Init empty
         });
 
+        // Send Welcome Email
+        // We import dynamically to avoid issues if email fails, or just call it.
+        const { sendWelcomeEmail } = await import("@/lib/email");
+        await sendWelcomeEmail(email, name);
+
         // We can't auto-login easily with credentials in server actions without redirecting to login logic
         // or reusing signIn. For simplicity, we'll try to sign them in or just return success.
         // Let's redirect to login for now or try signIn directly.

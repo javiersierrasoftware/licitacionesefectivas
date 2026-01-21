@@ -48,6 +48,10 @@ export async function updateProfile(
                 phone,
                 website,
                 unspscCodes,
+                profileName: formData.get("profileName") as string,
+                sectors: JSON.parse((formData.get("sectors") as string) || "[]"),
+                departments: JSON.parse((formData.get("departments") as string) || "[]"),
+                preferences: JSON.parse((formData.get("preferences") as string) || "{}"),
             },
             { upsert: true, new: true }
         );

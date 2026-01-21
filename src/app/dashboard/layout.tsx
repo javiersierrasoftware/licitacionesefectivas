@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, Settings, LogOut, CheckSquare } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Settings, LogOut, CheckSquare, Star } from "lucide-react";
 import { LogoutButton } from "@/components/ui/LogoutButton";
 import { AdminLink } from "@/components/ui/AdminLink";
 
@@ -34,6 +34,14 @@ export default async function DashboardLayout({
                     >
                         <CheckSquare className="h-5 w-5" />
                         <span className="font-medium">Oportunidades</span>
+                    </Link>
+
+                    <Link
+                        href="/dashboard/interests"
+                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors"
+                    >
+                        <Star className="h-5 w-5" />
+                        <span className="font-medium">Interés</span>
                     </Link>
 
                     <Link

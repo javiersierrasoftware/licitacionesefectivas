@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import CompanyProfile from "@/lib/models/CompanyProfile";
 import User from "@/lib/models/User";
 import { updateProfile } from "@/lib/actions/profile";
-import { ProfileForm } from "./profile-form"; // Client component
+import { ProfileWizard } from "@/components/dashboard/profile/ProfileWizard";
 
 export default async function ProfilePage() {
     const session = await auth();
@@ -23,10 +23,10 @@ export default async function ProfilePage() {
                 </p>
             </div>
 
-            <div className="bg-white rounded-xl border p-6 shadow-sm">
-                <ProfileForm
+            <div className="bg-transparent">
+                <ProfileWizard
                     user={{ name: user?.name, email: user?.email }}
-                    profile={JSON.parse(JSON.stringify(profile))}
+                    existingProfile={JSON.parse(JSON.stringify(profile))}
                 />
             </div>
         </div>
