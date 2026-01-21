@@ -11,6 +11,7 @@ export interface SecopTender {
     modalidad_de_contratacion: string;
     urlproceso: { url: string } | string; // Can be object or string depending on parsing
     codigo_principal_de_categoria: string;
+    fecha_de_recepcion_de_ofertas?: string; // Closing date
 }
 
 export async function fetchSecopOpportunities(unspscCodes: string[] = []) {

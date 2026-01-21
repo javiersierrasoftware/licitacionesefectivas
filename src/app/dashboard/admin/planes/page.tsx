@@ -8,8 +8,13 @@ export default async function AdminPlanesPage() {
     await dbConnect();
     const session = await auth();
 
-    // Basic authorization check - in real app check session.user.role === 'admin'
-    if (session?.user?.email !== "javiersierrac@gmail.com") {
+    // Check for admin role
+    const userRole = (session?.user as any)?.role;
+
+    // Allow case insensitive role check
+    const isRoleAdmin = userRole?.toLowerCase() === 'admin';
+
+    if (!isRoleAdmin) {
         return <div className="p-8 text-center text-red-500">No tienes permisos de administrador.</div>;
     }
 

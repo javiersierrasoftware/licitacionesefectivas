@@ -126,51 +126,51 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
 
 
     return (
-        <div className="rounded-md border bg-white shadow-sm overflow-hidden">
+        <div className="rounded-xl border border-gray-100 bg-white shadow-premium overflow-hidden">
             <Table>
-                <TableHeader className="bg-[#00B4D8]">
-                    <TableRow className="hover:bg-[#00B4D8] border-none">
-                        <TableHead className="w-[50px] text-white font-bold h-auto py-2 text-center border-r border-[#009bb8] align-top">
+                <TableHeader className="bg-primary">
+                    <TableRow className="hover:bg-primary border-none">
+                        <TableHead className="w-[50px] text-white font-bold h-auto py-3 text-center border-r border-[#009bb8]/30 align-top first:rounded-tl-xl">
                             <div className="mb-1">
-                                <input type="checkbox" className="rounded border-white/50 text-[#00B4D8] focus:ring-0" />
+                                <input type="checkbox" className="rounded border-white/50 text-accent focus:ring-0 cursor-pointer" />
                             </div>
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top">
                             Portal
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[120px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[120px]">
                             <div>Entidad</div>
                             <FilterInput value={filters.entidad} onChange={(v) => setFilters(p => ({ ...p, entidad: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center min-w-[300px] border-r border-[#009bb8] align-top">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center min-w-[300px] border-r border-[#009bb8]/30 align-top">
                             <div>Objeto</div>
                             <FilterInput value={filters.objeto} onChange={(v) => setFilters(p => ({ ...p, objeto: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[100px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[100px]">
                             <div>Cuantía</div>
                             <FilterInput value={filters.cuantia} onChange={(v) => setFilters(p => ({ ...p, cuantia: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] max-w-[120px] align-top min-w-[100px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 max-w-[120px] align-top min-w-[100px]">
                             <div>Modalidad</div>
                             <FilterInput value={filters.modalidad} onChange={(v) => setFilters(p => ({ ...p, modalidad: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[100px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[100px]">
                             <div>Número</div>
                             <FilterInput value={filters.numero} onChange={(v) => setFilters(p => ({ ...p, numero: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[100px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[100px]">
                             <div>Estado</div>
                             <FilterInput value={filters.estado} onChange={(v) => setFilters(p => ({ ...p, estado: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[100px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[100px]">
                             <div>F. pub</div>
                             <FilterInput value={filters.fecha} onChange={(v) => setFilters(p => ({ ...p, fecha: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8] align-top min-w-[120px]">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[120px]">
                             <div>Ubicación</div>
                             <FilterInput value={filters.ubicacion} onChange={(v) => setFilters(p => ({ ...p, ubicacion: v }))} placeholder="Filtrar..." />
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-2 text-[11px] uppercase tracking-wider text-center align-top">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center align-top last:rounded-tr-xl">
                             Contratista(s)
                         </TableHead>
                     </TableRow>
@@ -196,61 +196,61 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                             return (
                                 <React.Fragment key={tender.referencia_del_proceso}>
                                     {/* Data Row */}
-                                    <TableRow className={`border-none hover:bg-transparent ${rowClass}`}>
-                                        <TableCell className="text-center align-middle relative py-6 border-r border-gray-100 w-[50px]">
-                                            <input type="checkbox" className="rounded border-gray-300 text-[#00B4D8] focus:ring-[#00B4D8]" />
+                                    <TableRow className={`border-none ring-1 ring-inset ring-transparent hover:ring-gray-200 transition-all duration-200 hover:bg-neutral hover:shadow-sm ${rowClass}`}>
+                                        <TableCell className="text-center align-middle relative py-6 border-r border-gray-50 w-[50px]">
+                                            <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer" />
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100 w-[60px]">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50 w-[60px]">
                                             <div className="flex justify-center">
-                                                <div className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] font-bold shadow-sm">
+                                                <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] font-bold shadow-sm">
                                                     S2
                                                 </div>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100 max-w-[150px]">
-                                            <div className="font-bold text-[10px] uppercase text-gray-800 leading-tight mb-2">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50 max-w-[150px]">
+                                            <div className="font-bold text-[10px] uppercase text-gray-800 leading-tight mb-2 line-clamp-2">
                                                 {tender.entidad}
                                             </div>
-                                            <div className="text-[#00B4D8] text-[10px] cursor-pointer hover:underline flex items-center justify-center gap-1 font-bold">
+                                            <div className="text-primary text-[10px] cursor-pointer hover:underline flex items-center justify-center gap-1 font-bold">
                                                 Ver análisis <span className="text-[8px]">›</span>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="align-middle py-6 border-r border-gray-100 px-6">
-                                            <div className="uppercase font-bold text-[10px] text-gray-700 leading-relaxed text-center" title={tender.descripci_n_del_procedimiento}>
+                                        <TableCell className="align-middle py-6 border-r border-gray-50 px-6">
+                                            <div className="uppercase font-bold text-[10px] text-gray-700 leading-relaxed text-center line-clamp-3" title={tender.descripci_n_del_procedimiento}>
                                                 {tender.descripci_n_del_procedimiento}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
-                                            <div className="text-[11px] font-bold text-[#8BC34A] whitespace-nowrap">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
+                                            <div className="text-[11px] font-bold text-secondary whitespace-nowrap">
                                                 {formatCurrency(tender.precio_base)}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
-                                            <div className="text-[10px] leading-tight text-gray-800 font-medium">
-                                                {tender.modalidad_de_contratacion || "Solicitud de información a los Proveedores"}
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
+                                            <div className="text-[10px] leading-tight text-gray-600 font-medium">
+                                                {tender.modalidad_de_contratacion || "Solicitud de información"}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
                                             <div className="text-[10px] font-bold text-gray-800 whitespace-nowrap">
                                                 {tender.referencia_del_proceso}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
-                                            <span className="text-[10px] text-gray-600">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
+                                            <span className="text-[10px] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-100">
                                                 {tender.fase === 'Presentación de oferta' ? 'En borrador' : 'No aplica'}
                                             </span>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
-                                            <div className="text-[10px] text-gray-800 font-bold">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
+                                            <div className="text-[10px] text-gray-600 font-medium">
                                                 {formatDate(tender.fecha_de_publicacion_del)}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-100">
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
                                             <div className="flex flex-col items-center">
                                                 <div className="flex items-center gap-1 mb-2 text-gray-600 text-[10px] font-medium leading-tight">
                                                     <span className="text-center">{tender.departamento_entidad} : {tender.ciudad_entidad}</span>
                                                 </div>
-                                                <div className="text-[#00B4D8] cursor-pointer hover:underline text-[10px] flex items-center gap-1 font-bold">
+                                                <div className="text-primary cursor-pointer hover:underline text-[10px] flex items-center gap-1 font-bold">
                                                     Ver análisis <span className="text-[8px]">›</span>
                                                 </div>
                                             </div>
@@ -263,14 +263,14 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                     </TableRow>
 
                                     {/* Action Toolbar Row */}
-                                    <TableRow className={`border-b border-gray-200 hover:bg-transparent ${rowClass}`}>
+                                    <TableRow className={`border-b border-gray-100 hover:bg-neutral ${rowClass}`}>
                                         <TableCell colSpan={11} className="py-2 px-6">
-                                            <div className="flex items-center gap-8 pl-14">
+                                            <div className="flex items-center gap-8 pl-14 opacity-80 hover:opacity-100 transition-opacity">
                                                 {/* View Documents Button */}
                                                 <Button
                                                     variant="outline"
                                                     size="sm"
-                                                    className="h-7 rounded-full border-[#00B4D8] text-[#00B4D8] hover:bg-cyan-50 px-6 text-[11px] font-bold bg-white"
+                                                    className="h-8 rounded-lg border-primary/20 text-primary hover:bg-primary/5 px-4 text-[11px] font-bold bg-white"
                                                     asChild
                                                 >
                                                     <a href={processUrl} target="_blank" rel="noopener noreferrer">

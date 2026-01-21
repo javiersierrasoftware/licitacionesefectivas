@@ -13,7 +13,7 @@ const navLinks = [
     { name: "Planes", href: "/planes" },
     { name: "Servicios", href: "#servicios" },
     { name: "Nosotros", href: "#nosotros" },
-    { name: "Contacto", href: "#contacto" },
+    { name: "Contacto", href: "/contactanos" },
 ];
 
 import type { Session } from "next-auth";

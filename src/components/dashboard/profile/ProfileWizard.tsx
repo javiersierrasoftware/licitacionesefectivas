@@ -7,6 +7,7 @@ import { StepActivity } from "./StepActivity";
 import { StepModality } from "./StepModality";
 import { StepLocation } from "./StepLocation";
 import { StepPreferences } from "./StepPreferences";
+import { StepCompanyData } from "./StepCompanyData";
 import { updateProfile } from "@/lib/actions/profile";
 import { useRouter } from "next/navigation";
 
@@ -17,14 +18,24 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
         if (existingProfile) {
             return {
                 ...INITIAL_WIZARD_DATA,
+                // New Fields mapping
+                nit: existingProfile.nit || "",
+                legalRepresentative: existingProfile.legalRepresentative || "",
+                creationDate: existingProfile.creationDate ? new Date(existingProfile.creationDate).toISOString().split('T')[0] : "",
+                rutFile: existingProfile.rutFile || "",
+
                 unspscCodes: existingProfile.unspscCodes || [],
                 profileName: existingProfile.profileName || existingProfile.companyName || "",
-                // Map other existing fields
+                description: existingProfile.description || "",
                 sectors: existingProfile.sectors || [],
                 departments: existingProfile.departments || [],
-                preferences: existingProfile.preferences || {
-                    emailNotifications: true,
-                    historyStart: new Date()
+                preferences: {
+                    emailNotifications: existingProfile.preferences?.emailNotifications ?? true,
+                    historyStart: existingProfile.preferences?.historyStart
+                        ? new Date(existingProfile.preferences.historyStart).toISOString().split('T')[0]
+                        : new Date().toISOString().split('T')[0],
+                    tenderValueMin: existingProfile.preferences?.tenderValueMin || "",
+                    tenderValueMax: existingProfile.preferences?.tenderValueMax || ""
                 },
             };
         }
@@ -42,19 +53,16 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
     const handleSubmit = async () => {
         setIsSubmitting(true);
         try {
-            // Create FormData object to match the server action expectation
-            // Note: updateProfile likely expects a FormData object based on the previous form implementation using useActionState
-            // We need to adapt it or create a new server action that accepts JSON.
-            // Given the previous file was using useActionState with FormData, let's verify if we can call it directly or if we need to wrap it.
-
-            // Inspecting profile-form.tsx: const [message, formAction, isPending] = useActionState(updateProfile, undefined);
-            // updateProfile signature typically: (prevState: any, formData: FormData)
-
             const formData = new FormData();
-            formData.append("name", user.name || ""); // Required by backend validation likely
-            formData.append("companyName", data.profileName || "Mi Empresa"); // Fallback
-            // We need to pass the complex arrays as JSON strings or multiple entries depending on how the backend parses it.
-            // Based on UnspscSelector, it used a hidden input with JSON.stringify
+            formData.append("name", user.name || "");
+            formData.append("companyName", data.profileName || "Mi Empresa");
+            formData.append("description", data.description || "");
+
+            // New Fields - ensure strings/fallbacks
+            formData.append("nit", data.nit || "");
+            formData.append("legalRepresentative", data.legalRepresentative || "");
+            formData.append("creationDate", data.creationDate || "");
+            formData.append("rutFile", data.rutFile || "");
 
             formData.append("unspscCodes", JSON.stringify(data.unspscCodes));
             formData.append("sectors", JSON.stringify(data.sectors));
@@ -62,15 +70,12 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
             formData.append("profileName", data.profileName);
             formData.append("preferences", JSON.stringify(data.preferences));
 
-            // Call the action
             const result = await updateProfile(undefined, formData);
 
             if (result && result.includes("Error")) {
                 alert("Error updating: " + result);
             } else {
-                // Success
                 router.refresh();
-                // Maybe redirect to dashboard/opportunities
                 router.push("/dashboard/opportunities");
             }
 
@@ -83,18 +88,20 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
     };
 
     return (
-        <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden min-h-[600px] flex flex-col p-8 md:p-12 relative">
+        <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-premium border border-white/60 overflow-hidden min-h-[600px] flex flex-col p-8 md:p-12 relative">
 
-            {/* Progress Indicator (only show after step 1) */}
+            {/* Progress Indicator */}
             {step > 1 && (
-                <div className="flex items-center justify-center space-x-4 mb-8 text-sm font-medium text-gray-400">
-                    <span className={step === 2 ? "text-green-500 font-bold" : step > 2 ? "text-green-500" : ""}>1/4 Actividad económica</span>
-                    <div className="w-8 h-px bg-gray-200" />
-                    <span className={step === 3 ? "text-green-500 font-bold" : step > 3 ? "text-green-500" : ""}>2/4 Modalidad</span>
-                    <div className="w-8 h-px bg-gray-200" />
-                    <span className={step === 4 ? "text-green-500 font-bold" : step > 4 ? "text-green-500" : ""}>3/4 Ubicación</span>
-                    <div className="w-8 h-px bg-gray-200" />
-                    <span className={step === 5 ? "text-green-500 font-bold" : ""}>4/4 Preferencias</span>
+                <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-medium text-gray-400 mb-8 overflow-x-auto">
+                    <span className={step >= 2 ? "text-primary font-bold" : ""}>1/5 Datos</span>
+                    <div className={`w-4 h-0.5 rounded-full ${step >= 2 ? 'bg-primary' : 'bg-gray-100'}`} />
+                    <span className={step >= 3 ? "text-primary font-bold" : ""}>2/5 Actividad</span>
+                    <div className={`w-4 h-0.5 rounded-full ${step >= 3 ? 'bg-primary' : 'bg-gray-100'}`} />
+                    <span className={step >= 4 ? "text-primary font-bold" : ""}>3/5 Modalidad</span>
+                    <div className={`w-4 h-0.5 rounded-full ${step >= 4 ? 'bg-primary' : 'bg-gray-100'}`} />
+                    <span className={step >= 5 ? "text-primary font-bold" : ""}>4/5 Ubicación</span>
+                    <div className={`w-4 h-0.5 rounded-full ${step >= 5 ? 'bg-primary' : 'bg-gray-100'}`} />
+                    <span className={step === 6 ? "text-primary font-bold" : ""}>5/5 Preferencias</span>
                 </div>
             )}
 
@@ -103,15 +110,23 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
                 {step === 1 && <StepWelcome userName={user.name?.split(' ')[0] || "Usuario"} onNext={next} />}
 
                 {step === 2 && (
-                    <StepActivity
-                        selectedCodes={data.unspscCodes}
-                        onChange={(codes) => updateData({ unspscCodes: codes })}
+                    <StepCompanyData
+                        data={data}
+                        onChange={updateData}
                         onNext={next}
-                        onBack={() => setStep(1)} // Back to step 1 explicitly
                     />
                 )}
 
                 {step === 3 && (
+                    <StepActivity
+                        selectedCodes={data.unspscCodes}
+                        onChange={(codes) => updateData({ unspscCodes: codes })}
+                        onNext={next}
+                        onBack={back}
+                    />
+                )}
+
+                {step === 4 && (
                     <StepModality
                         selectedSectors={data.sectors}
                         onChange={(sectors) => updateData({ sectors })}
@@ -120,7 +135,7 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
                     />
                 )}
 
-                {step === 4 && (
+                {step === 5 && (
                     <StepLocation
                         selectedDepartments={data.departments}
                         onChange={(departments) => updateData({ departments })}
@@ -129,7 +144,7 @@ export function ProfileWizard({ user, existingProfile }: { user: any, existingPr
                     />
                 )}
 
-                {step === 5 && (
+                {step === 6 && (
                     <StepPreferences
                         data={data}
                         onChange={updateData}

@@ -51,7 +51,7 @@ export default async function OpportunitiesPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight">Oportunidades de Negocio</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Oportunidades de Negocio</h1>
                 <p className="text-muted-foreground">
                     {profile?.unspscCodes?.length
                         ? "Licitaciones activas en SECOP II que coinciden con tus áreas de interés."

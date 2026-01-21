@@ -102,99 +102,127 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                 </p>
             </div>
 
-            {/* Statistics Cards */}
+            {/* Statistics Cards - Modernized */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {/* Oportunidades Totales */}
-                <Card className="border-l-4 border-l-[#00B4D8] shadow-sm">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Oportunidades Activas
-                        </CardTitle>
-                        <Search className="h-4 w-4 text-[#00B4D8]" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold text-gray-900">{totalCount}</div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                            Disponibles ahora
-                        </p>
+                <Card className="shadow-premium border-0 bg-white hover:-translate-y-1 transition-all duration-300">
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between space-x-4">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 text-primary">
+                                <Search className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1 text-right">
+                                <p className="text-sm font-medium text-muted-foreground">Activas</p>
+                                <h3 className="text-2xl font-bold text-gray-900">{totalCount}</h3>
+                            </div>
+                        </div>
+                        <div className="mt-4">
+                            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-full bg-primary w-2/3 rounded-full" />
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2">Disponibles ahora</p>
+                        </div>
                     </CardContent>
                 </Card>
 
                 {/* Valor Total */}
-                <Card className="border-l-4 border-l-green-500 shadow-sm">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Valor Total Mercado
-                        </CardTitle>
-                        <DollarSign className="h-4 w-4 text-green-600" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold text-gray-900">{formatCurrency(totalValuation)}</div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                            Suma de cuantías
-                        </p>
+                <Card className="shadow-premium border-0 bg-white hover:-translate-y-1 transition-all duration-300">
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between space-x-4">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50 text-secondary">
+                                <DollarSign className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1 text-right">
+                                <p className="text-sm font-medium text-muted-foreground">Valor Mercado</p>
+                                <h3 className="text-xl font-bold text-gray-900 truncate" title={formatCurrency(totalValuation)}>{formatCurrency(totalValuation)}</h3>
+                            </div>
+                        </div>
+                        <div className="mt-4">
+                            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-full bg-secondary w-full rounded-full" />
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2">Suma de cuantías</p>
+                        </div>
                     </CardContent>
                 </Card>
 
                 {/* Guardadas */}
-                <Card className="border-l-4 border-l-amber-400 shadow-sm">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            De Tu Interés
-                        </CardTitle>
-                        <Clock className="h-4 w-4 text-amber-500" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold text-gray-900">{savedCount}</div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                            Marcadas como favoritas
-                        </p>
+                <Card className="shadow-premium border-0 bg-white hover:-translate-y-1 transition-all duration-300">
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between space-x-4">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-amber-50 text-accent">
+                                <Clock className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1 text-right">
+                                <p className="text-sm font-medium text-muted-foreground">De Interés</p>
+                                <h3 className="text-2xl font-bold text-gray-900">{savedCount}</h3>
+                            </div>
+                        </div>
+                        <div className="mt-4">
+                            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-full bg-accent w-1/2 rounded-full" />
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2">Marcadas favoritas</p>
+                        </div>
                     </CardContent>
                 </Card>
 
                 {/* Perfil Status */}
-                <Card className="border-l-4 border-l-purple-500 shadow-sm">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Perfil de Filtrado
-                        </CardTitle>
-                        <CheckCircle className="h-4 w-4 text-purple-600" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold text-gray-900">
-                            {profile?.unspscCodes?.length ? "Activo" : "General"}
+                <Card className="shadow-premium border-0 bg-white hover:-translate-y-1 transition-all duration-300">
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between space-x-4">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-purple-50 text-purple-600">
+                                <CheckCircle className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1 text-right">
+                                <p className="text-sm font-medium text-muted-foreground">Perfil</p>
+                                <h3 className="text-xl font-bold text-gray-900">
+                                    {profile?.unspscCodes?.length ? "Activo" : "General"}
+                                </h3>
+                            </div>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                            {profile?.unspscCodes?.length
-                                ? `${profile.unspscCodes.length} códigos configurados`
-                                : "Sin filtros aplicados"}
-                        </p>
+                        <div className="mt-4">
+                            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div className={`h-full rounded-full ${profile?.unspscCodes?.length ? "bg-purple-600 w-full" : "bg-gray-300 w-1/3"}`} />
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2">
+                                {profile?.unspscCodes?.length
+                                    ? `${profile.unspscCodes.length} códigos`
+                                    : "Sin filtros"}
+                            </p>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-3">
                 {/* Top Entidades */}
-                <Card className="col-span-1 shadow-sm">
-                    <CardHeader>
-                        <CardTitle className="text-lg">Top Entidades Contratantes</CardTitle>
+                <Card className="md:col-span-2 shadow-premium border-0 bg-white">
+                    <CardHeader className="border-b border-gray-50 pb-4">
+                        <CardTitle className="text-lg font-bold text-gray-800">Top Entidades Contratantes</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
+                    <CardContent className="pt-6">
+                        <div className="space-y-5">
                             {topEntities.length === 0 ? (
                                 <p className="text-sm text-muted-foreground">No hay datos suficientes.</p>
                             ) : (
                                 topEntities.map(([name, count], index) => (
-                                    <div key={index} className="flex items-center">
-                                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600 mr-3">
+                                    <div key={index} className="flex items-center group">
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold mr-4 transition-colors ${index === 0 ? 'bg-amber-100 text-amber-700' : index === 1 ? 'bg-gray-100 text-gray-600' : index === 2 ? 'bg-orange-50 text-orange-700' : 'bg-gray-50 text-gray-500'}`}>
                                             {index + 1}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-medium text-gray-900 truncate">
+                                            <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-primary transition-colors">
                                                 {name}
                                             </p>
+                                            <div className="w-full bg-gray-100 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                                                <div
+                                                    className="h-full bg-primary/60 rounded-full"
+                                                    style={{ width: `${Math.min(100, (Number(count) / Number(topEntities[0][1])) * 100)}%` }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="text-sm font-bold text-gray-600">
+                                        <div className="text-sm font-bold text-gray-700 ml-4 bg-gray-50 px-3 py-1 rounded-lg">
                                             {count as number}
                                         </div>
                                     </div>
@@ -204,17 +232,27 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                     </CardContent>
                 </Card>
 
-                {/* Call to Action or Tips */}
-                <div className="rounded-xl border bg-gradient-to-br from-blue-50 to-indigo-50 p-8 shadow-sm flex flex-col justify-center">
-                    <h3 className="text-lg font-bold text-blue-900 mb-2">Consejo para ganar</h3>
-                    <p className="text-blue-700/80 text-sm mb-6">
-                        Revisa los pliegos de condiciones inmediatamente. Las licitaciones con cuantías menores suelen tener tiempos de respuesta muy cortos (2-3 días).
-                    </p>
+                {/* Call to Action or Tips - Premium Gradient Card */}
+                <div className="md:col-span-1 rounded-2xl bg-gradient-to-br from-[#0090DF] to-[#005c8f] p-8 shadow-xl shadow-blue-200 text-white flex flex-col justify-between relative overflow-hidden group">
+                    {/* Decorative circles */}
+                    <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-all duration-500"></div>
+                    <div className="absolute bottom-0 left-0 -ml-8 -mb-8 w-24 h-24 rounded-full bg-white/10 blur-xl"></div>
+
+                    <div>
+                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm mb-4">
+                            <Briefcase className="w-5 h-5 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Consejo Pro</h3>
+                        <p className="text-white/80 text-sm leading-relaxed mb-6">
+                            Las licitaciones de <span className="font-semibold text-white">menor cuantía</span> suelen tener menos competencia. Revisa los pliegos inmediatamente, los tiempos de respuesta son cortos (2-3 días).
+                        </p>
+                    </div>
+
                     <a
                         href="/dashboard/opportunities"
-                        className="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-[#00B4D8] text-white hover:bg-[#009bb8] h-10 px-6 py-2 self-start"
+                        className="inline-flex items-center justify-center rounded-xl text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white bg-white text-[#0090DF] hover:bg-blue-50 h-11 px-6 shadow-sm hover:shadow-md w-full"
                     >
-                        Ver Oportunidades Ahora
+                        Explorar Oportunidades
                     </a>
                 </div>
             </div>

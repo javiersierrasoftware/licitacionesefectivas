@@ -17,8 +17,8 @@ export default async function InterestsPage() {
         <div className="space-y-6">
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <Star className="h-6 w-6 text-[#00B4D8] fill-[#00B4D8]" />
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Mesa de Interés</h1>
+                    <Star className="h-6 w-6 text-accent fill-accent" />
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Mesa de Interés</h1>
                 </div>
                 <p className="text-muted-foreground">
                     Tus procesos de contratación seleccionados y guardados.

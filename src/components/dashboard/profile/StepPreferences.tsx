@@ -59,6 +59,8 @@ export function StepPreferences({ data, onChange, onBack, onSubmit, isSubmitting
                             id="description"
                             placeholder="Ingresa una descripción al perfil"
                             className="resize-none rounded-2xl bg-white border-gray-200 focus:border-cyan-500 focus:ring-cyan-500 min-h-[120px]"
+                            value={data.description || ""}
+                            onChange={(e) => onChange({ description: e.target.value })}
                         />
                     </div>
                 </div>
@@ -101,6 +103,32 @@ export function StepPreferences({ data, onChange, onBack, onSubmit, isSubmitting
                         <p className="text-sm text-muted-foreground leading-relaxed">
                             Te notificaremos en tu correo cuando encontremos una oportunidad que coincida con este perfil.
                         </p>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-gray-100">
+                        <Label className="text-gray-700 font-medium block mb-3">Valor de Licitaciones (COP):</Label>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                                <span className="text-xs text-muted-foreground">Mínimo</span>
+                                <Input
+                                    type="number"
+                                    placeholder="0"
+                                    className="rounded-xl bg-white"
+                                    value={data.preferences.tenderValueMin || ""}
+                                    onChange={(e) => updatePreference("tenderValueMin", e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <span className="text-xs text-muted-foreground">Máximo</span>
+                                <Input
+                                    type="number"
+                                    placeholder="Sin límite"
+                                    className="rounded-xl bg-white"
+                                    value={data.preferences.tenderValueMax || ""}
+                                    onChange={(e) => updatePreference("tenderValueMax", e.target.value)}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                 </div>

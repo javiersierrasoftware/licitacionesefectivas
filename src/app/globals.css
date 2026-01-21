@@ -3,10 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* 4-Color Theme System */
   --primary: #0090DF;
-  /* --primary-foreground: #ffffff; */
+  /* Main Brand Color (Blue) */
   --secondary: #69A03A;
-  /* --secondary-foreground: #ffffff; */
+  /* Secondary Brand Color (Green) */
+  --accent: #F59E0B;
+  /* Accent/CTA Color (Amber/Orange) */
+  --neutral: #F3F4F6;
+  /* Neutral/Background Color (Light Gray) */
+
   --muted: #f4f4f4;
 }
 
@@ -15,12 +22,26 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-neutral: var(--neutral);
   --color-muted: var(--muted);
   --font-sans: var(--font-montserrat);
 }
 
+@utility glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@utility shadow-premium {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 3px rgba(0, 0, 0, 0.02);
+}
+
 body {
-  background: var(--background);
+  background: var(--neutral);
+  /* Ensuring background is neutral for better contrast */
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

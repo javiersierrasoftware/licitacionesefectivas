@@ -31,12 +31,12 @@ export default async function PlanesPage() {
 
             <main className="flex-1">
                 {/* Hero for Plans Page */}
-                <div className="bg-primary/5 py-12 md:py-20">
+                <div className="bg-primary/5 py-6 md:py-10">
                     <div className="container mx-auto px-4 md:px-6 text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
+                        <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl mb-4">
                             Nuestros Planes
                         </h1>
-                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                             Transparencia y flexibilidad. Elige la herramienta perfecta para ganar licitaciones.
                         </p>
                     </div>

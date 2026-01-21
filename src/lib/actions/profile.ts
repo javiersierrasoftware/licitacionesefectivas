@@ -43,15 +43,27 @@ export async function updateProfile(
             { userId: session.user.id },
             {
                 companyName,
+                description: formData.get("description") as string,
                 nit,
                 address,
                 phone,
                 website,
                 unspscCodes,
+                // New Fields
+                legalRepresentative: formData.get("legalRepresentative") as string,
+                creationDate: formData.get("creationDate") ? new Date(formData.get("creationDate") as string) : undefined,
+                rutFile: formData.get("rutFile") as string,
                 profileName: formData.get("profileName") as string,
                 sectors: JSON.parse((formData.get("sectors") as string) || "[]"),
                 departments: JSON.parse((formData.get("departments") as string) || "[]"),
-                preferences: JSON.parse((formData.get("preferences") as string) || "{}"),
+                preferences: (() => {
+                    const prefs = JSON.parse((formData.get("preferences") as string) || "{}");
+                    // Ensure numbers are numbers or undefined (not empty strings)
+                    if (prefs.tenderValueMin === "") prefs.tenderValueMin = undefined;
+                    if (prefs.tenderValueMax === "") prefs.tenderValueMax = undefined;
+                    if (prefs.historyStart === "") prefs.historyStart = undefined;
+                    return prefs;
+                })(),
             },
             { upsert: true, new: true }
         );

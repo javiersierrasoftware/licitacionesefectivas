@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google"; // Changed from Geist
+import SessionTimeout from "@/components/auth/SessionTimeout";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
@@ -28,6 +29,7 @@ export default async function RootLayout({
         className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}
       >
         <Navbar session={session} />
+        <SessionTimeout session={session} />
         <main className="flex-1">
           {children}
         </main>

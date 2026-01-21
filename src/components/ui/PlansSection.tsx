@@ -65,9 +65,9 @@ export function PlansSection({ plans }: PlansSectionProps) {
     const displayPlans = plans && plans.length > 0 ? plans : defaultPlans;
 
     return (
-        <section id="planes" className="py-24 bg-gradient-to-b from-white to-gray-50">
+        <section id="planes" className="py-8 bg-gradient-to-b from-white to-gray-50">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="text-center mb-16 max-w-3xl mx-auto">
+                <div className="text-center mb-8 max-w-3xl mx-auto">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
                         Elige el plan ideal para tu éxito
                     </h2>

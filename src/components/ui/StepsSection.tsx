@@ -20,21 +20,21 @@ export function StepsSection() {
     ];
 
     return (
-        <section className="py-16 bg-white border-y border-gray-100">
+        <section className="py-8 bg-white border-y border-gray-100">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="text-center mb-12">
+                <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-gray-900">¿Cómo funciona?</h2>
                     <p className="text-muted-foreground">Tres simples pasos para empezar a ganar.</p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 text-center relative max-w-5xl mx-auto">
                     {/* Connecting Line (Desktop) */}
-                    <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-100 -z-10" />
+                    <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-gray-100 -z-10" />
 
                     {steps.map((step, index) => (
                         <div key={index} className="flex flex-col items-center bg-white p-4 relative">
-                            <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center mb-6 text-primary shadow-sm border border-blue-100 z-10">
-                                <step.icon className="h-10 w-10" />
+                            <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-primary shadow-sm border border-blue-100 z-10">
+                                <step.icon className="h-8 w-8" />
                             </div>
                             <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
                             <p className="text-muted-foreground leading-relaxed max-w-xs">{step.description}</p>

@@ -37,8 +37,8 @@ export default async function SettingsPage() {
         <div className="max-w-4xl mx-auto space-y-6">
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <Bell className="h-6 w-6 text-[#00B4D8]" />
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Configuración de Notificaciones</h1>
+                    <Bell className="h-6 w-6 text-primary" />
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Configuración de Notificaciones</h1>
                 </div>
                 <p className="text-muted-foreground">
                     Personaliza cómo y cuándo quieres recibir alertas sobre nuevas oportunidades.

@@ -8,14 +8,13 @@ import { revalidatePath } from "next/cache";
 // Ensure only admins can perform these actions
 async function checkAdmin() {
     const session = await auth();
-    // Use optional chaining carefully, referencing the role property we added to User model
-    // Note: You might need to extend the Session type in next-auth.d.ts to typescript-know about 'role'
-    // For now we assume if it's stored in DB it might be available or we re-fetch user.
-    // Ideally session callback populates role.
-    if (session?.user?.email !== "javiersierrac@gmail.com") {
-        // Quick fallback check if role isn't in session yet
-        // In a real app we'd verify the role from the token/session properly
-        throw new Error("Unauthorized");
+    // Check role explicitly
+    const userRole = (session?.user as any)?.role;
+
+    const isRoleAdmin = userRole?.toLowerCase() === 'admin';
+
+    if (!isRoleAdmin) {
+        throw new Error("Unauthorized: Admin role required");
     }
 }
 

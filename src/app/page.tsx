@@ -1,4 +1,5 @@
 import { Hero } from "@/components/ui/Hero";
+import Link from "next/link";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { PlansSection } from "@/components/ui/PlansSection";
 import { Search, Shield, TrendingUp, Users } from "lucide-react";
@@ -27,7 +28,7 @@ export default async function Home() {
       <Hero />
 
       {/* Services Section */}
-      <section id="servicios" className="py-20 bg-gray-50">
+      <section id="servicios" className="py-12 bg-neutral">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
@@ -67,7 +68,7 @@ export default async function Home() {
       <PlansSection plans={formattedPlans.length > 0 ? formattedPlans : undefined} />
 
       {/* Trust/Stats Section */}
-      <section id="nosotros" className="py-20 bg-white">
+      <section id="nosotros" className="py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -104,7 +105,7 @@ export default async function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary/5">
+      <section className="py-16 bg-primary/5">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6">
             ¿Listo para ganar tu próxima licitación?
@@ -113,12 +114,12 @@ export default async function Home() {
             Agenda una consultoría gratuita y descubre cómo podemos potenciar tus resultados en el sector público.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-md px-8 bg-primary text-white hover:bg-primary/90">
+            <Link href="/contactanos" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-primary text-white hover:bg-primary/90">
               Contáctanos Ahora
-            </button>
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-md px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+            </Link>
+            <Link href="/planes" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
               Ver Planes
-            </button>
+            </Link>
           </div>
         </div>
       </section>

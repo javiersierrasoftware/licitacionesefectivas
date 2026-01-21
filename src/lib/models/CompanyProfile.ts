@@ -31,6 +31,7 @@ const CompanyProfileSchema = new mongoose.Schema({
         type: String,
         required: false, // Optional for now to support legacy
     },
+    description: String,
     sectors: {
         type: [String], // e.g., ["Public", "Private"]
         default: [],
@@ -42,7 +43,13 @@ const CompanyProfileSchema = new mongoose.Schema({
     preferences: {
         emailNotifications: { type: Boolean, default: true }, // Legacy
         historyStart: { type: Date },
+        tenderValueMin: { type: Number },
+        tenderValueMax: { type: Number },
     },
+    // Company Data for Wizard
+    legalRepresentative: String,
+    creationDate: Date,
+    rutFile: String,
     // Enhanced Notification Settings
     notificationSettings: {
         enabled: { type: Boolean, default: true },
