@@ -8,6 +8,7 @@ export interface SecopTender {
     precio_base: string;
     fase: string; // Use 'fase' instead of 'estado_del_proceso'
     fecha_de_publicacion_del: string; // Correct key
+    fecha_de_publicacion?: string; // Fallback key
     modalidad_de_contratacion: string;
     urlproceso: { url: string } | string; // Can be object or string depending on parsing
     codigo_principal_de_categoria: string;
@@ -19,7 +20,11 @@ export async function fetchSecopOpportunities(unspscCodes: string[] = []) {
     const baseUrl = "https://www.datos.gov.co/resource/p6dx-8zbt.json";
 
     // Socrata 'fase' for active tenders
-    const whereClauseParts = ["(fase = 'Presentación de oferta' OR fase = 'Publicado')"];
+    // We remove strict date filtering to avoid issues with server time vs API time (2025 vs 2026)
+    // We rely on $order DESC and $limit to get the "latest" available.
+    const whereClauseParts = [
+        "(fase = 'Presentación de oferta' OR fase = 'Publicado' OR fase = 'Convocatoria')"
+    ];
 
     // Filter by codes if provided
     if (unspscCodes && unspscCodes.length > 0) {
@@ -32,7 +37,7 @@ export async function fetchSecopOpportunities(unspscCodes: string[] = []) {
 
     const params = new URLSearchParams({
         "$where": whereClauseParts.join(" AND "),
-        "$limit": "20",
+        "$limit": "1000", // Increased limit to capture full 5 days
         "$order": "fecha_de_publicacion_del DESC"
     });
 
@@ -41,7 +46,7 @@ export async function fetchSecopOpportunities(unspscCodes: string[] = []) {
 
     try {
         const res = await fetch(fullUrl, {
-            next: { revalidate: 300 } // Cache for 5 min
+            next: { revalidate: 0 } // No cache for fresh updates
         });
 
         if (!res.ok) {
@@ -57,5 +62,26 @@ export async function fetchSecopOpportunities(unspscCodes: string[] = []) {
     } catch (error) {
         console.error("SECOP API Network Error", error);
         return [];
+    }
+}
+
+export async function getSecopProcesoByRef(referencia: string): Promise<SecopTender | null> {
+    const baseUrl = "https://www.datos.gov.co/resource/p6dx-8zbt.json";
+
+    // Exact match on reference
+    const params = new URLSearchParams({
+        "referencia_del_proceso": referencia,
+        "$limit": "1"
+    });
+
+    try {
+        const res = await fetch(`${baseUrl}?${params.toString()}`, { cache: "no-store" });
+        if (!res.ok) return null;
+
+        const data = await res.json();
+        return data.length > 0 ? (data[0] as SecopTender) : null;
+    } catch (error) {
+        console.error("Error fetching single process:", error);
+        return null;
     }
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, Settings, LogOut, CheckSquare, Star } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Settings, LogOut, CheckSquare, Star, Briefcase } from "lucide-react";
 import { LogoutButton } from "@/components/ui/LogoutButton";
 import { AdminLink } from "@/components/ui/AdminLink";
 
@@ -48,6 +48,14 @@ export default async function DashboardLayout({
                     </div>
 
                     <Link
+                        href="/dashboard/bidding"
+                        className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
+                    >
+                        <Briefcase className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <span className="font-medium text-sm tracking-wide">Mis Procesos</span>
+                    </Link>
+
+                    <Link
                         href="/dashboard/profile"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
@@ -69,7 +77,7 @@ export default async function DashboardLayout({
                     {(session?.user as any)?.role?.toLowerCase() === 'admin' && (
                         <>
                             <div className="pt-4 pb-2">
-                                <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Procesos</p>
+                                <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Efectivas</p>
                             </div>
                             <Link
                                 href="/dashboard/admin/analisis"
@@ -77,6 +85,14 @@ export default async function DashboardLayout({
                             >
                                 <FileText className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
                                 <span className="font-medium text-sm tracking-wide">Análisis</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/admin/licitando"
+                                className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
+                            >
+                                <Users className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                                <span className="font-medium text-sm tracking-wide">Licitando</span>
                             </Link>
                         </>
                     )}

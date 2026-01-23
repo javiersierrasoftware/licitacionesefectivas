@@ -23,6 +23,7 @@ import {
 import { SecopTender } from "@/lib/services/secop";
 import { toggleFavorite } from "@/lib/actions/opportunities";
 import React, { useState } from "react";
+import Link from "next/link";
 
 interface OpportunitiesTableProps {
     opportunities: SecopTender[];
@@ -105,7 +106,12 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
         const matchNumero = (tender.referencia_del_proceso || "").toLowerCase().includes(filters.numero.toLowerCase());
 
         // Custom logic for derived fields
-        const estadoDisplay = tender.fase === 'Presentación de oferta' ? 'En borrador' : 'No aplica';
+        const getEstadoDisplay = (fase: string) => {
+            if (fase === 'Presentación de oferta') return 'En borrador';
+            if (fase === 'Convocatoria') return 'Convocatoria';
+            return fase || 'No aplica';
+        };
+        const estadoDisplay = getEstadoDisplay(tender.fase);
         const matchEstado = estadoDisplay.toLowerCase().includes(filters.estado.toLowerCase());
 
         const fechaDisplay = formatDate(tender.fecha_de_publicacion_del);
@@ -135,8 +141,12 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                 <input type="checkbox" className="rounded border-white/50 text-accent focus:ring-0 cursor-pointer" />
                             </div>
                         </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top">
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[50px]">
                             Portal
+                        </TableHead>
+                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[120px]">
+                            <div>Ubicación</div>
+                            <FilterInput value={filters.ubicacion} onChange={(v) => setFilters(p => ({ ...p, ubicacion: v }))} placeholder="Filtrar..." />
                         </TableHead>
                         <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[120px]">
                             <div>Entidad</div>
@@ -165,10 +175,6 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                         <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[100px]">
                             <div>F. pub</div>
                             <FilterInput value={filters.fecha} onChange={(v) => setFilters(p => ({ ...p, fecha: v }))} placeholder="Filtrar..." />
-                        </TableHead>
-                        <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[120px]">
-                            <div>Ubicación</div>
-                            <FilterInput value={filters.ubicacion} onChange={(v) => setFilters(p => ({ ...p, ubicacion: v }))} placeholder="Filtrar..." />
                         </TableHead>
                         <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center align-top last:rounded-tr-xl">
                             Contratista(s)
@@ -207,13 +213,23 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                                 </div>
                                             </div>
                                         </TableCell>
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50 bg-gray-50/30 min-w-[120px]">
+                                            <div className="flex flex-col items-center justify-center h-full">
+                                                <div className="flex items-center gap-1 text-gray-700 text-[10px] font-bold leading-tight uppercase text-center">
+                                                    <span className="block">{tender.departamento_entidad}</span>
+                                                </div>
+                                                <div className="text-[9px] text-gray-400 font-medium uppercase mt-0.5">
+                                                    {tender.ciudad_entidad}
+                                                </div>
+                                            </div>
+                                        </TableCell>
                                         <TableCell className="text-center align-middle py-6 border-r border-gray-50 max-w-[150px]">
                                             <div className="font-bold text-[10px] uppercase text-gray-800 leading-tight mb-2 line-clamp-2">
                                                 {tender.entidad}
                                             </div>
-                                            <div className="text-primary text-[10px] cursor-pointer hover:underline flex items-center justify-center gap-1 font-bold">
+                                            <Link href={`/dashboard/opportunities/${tender.referencia_del_proceso}`} className="text-primary text-[10px] cursor-pointer hover:underline flex items-center justify-center gap-1 font-bold">
                                                 Ver análisis <span className="text-[8px]">›</span>
-                                            </div>
+                                            </Link>
                                         </TableCell>
                                         <TableCell className="align-middle py-6 border-r border-gray-50 px-6">
                                             <div className="uppercase font-bold text-[10px] text-gray-700 leading-relaxed text-center line-clamp-3" title={tender.descripci_n_del_procedimiento}>
@@ -236,8 +252,8 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-center align-middle py-6 border-r border-gray-50">
-                                            <span className="text-[10px] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-100">
-                                                {tender.fase === 'Presentación de oferta' ? 'En borrador' : 'No aplica'}
+                                            <span className={`text-[10px] font-medium px-2 py-1 rounded-full border ${tender.fase === 'Convocatoria' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-gray-100 text-gray-600 border-gray-100'}`}>
+                                                {tender.fase === 'Presentación de oferta' ? 'En borrador' : (tender.fase || 'No aplica')}
                                             </span>
                                         </TableCell>
                                         <TableCell className="text-center align-middle py-6 border-r border-gray-50">
@@ -245,16 +261,7 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                                 {formatDate(tender.fecha_de_publicacion_del)}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50">
-                                            <div className="flex flex-col items-center">
-                                                <div className="flex items-center gap-1 mb-2 text-gray-600 text-[10px] font-medium leading-tight">
-                                                    <span className="text-center">{tender.departamento_entidad} : {tender.ciudad_entidad}</span>
-                                                </div>
-                                                <div className="text-primary cursor-pointer hover:underline text-[10px] flex items-center gap-1 font-bold">
-                                                    Ver análisis <span className="text-[8px]">›</span>
-                                                </div>
-                                            </div>
-                                        </TableCell>
+
                                         <TableCell className="text-center align-middle py-6">
                                             <span className="text-[10px] text-gray-400 italic">
                                                 No aplica adjudicación

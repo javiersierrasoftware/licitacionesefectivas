@@ -5,6 +5,7 @@ import SavedOpportunity from "@/lib/models/SavedOpportunity";
 import { redirect } from "next/navigation";
 import { Building2, Star } from "lucide-react";
 import { AnalysisTable, AnalysisCompany } from "@/components/dashboard/admin/AnalysisTable";
+import { ManualSyncButton } from "@/components/dashboard/admin/ManualSyncButton";
 
 export default async function AdminAnalysisPage() {
     const session = await auth();
@@ -95,14 +96,19 @@ export default async function AdminAnalysisPage() {
         };
     });
 
+
+
     return (
         <div className="space-y-6 h-[calc(100vh-100px)] flex flex-col">
             <div className="flex-none space-y-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Análisis de Procesos</h1>
-                    <p className="text-muted-foreground mt-1">
-                        Visión general del interés de las empresas en los procesos de contratación.
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight text-foreground">Análisis de Procesos</h1>
+                        <p className="text-muted-foreground mt-1">
+                            Visión general del interés de las empresas en los procesos de contratación.
+                        </p>
+                    </div>
+                    <ManualSyncButton />
                 </div>
 
                 {/* KPI Cards */}
