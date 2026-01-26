@@ -25,7 +25,7 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "Gratis",
             description: "Para empezar a explorar",
             features: ["Búsqueda ilimitada", "Filtros básicos", "Notificaciones diarias"],
-            color: "bg-gray-100 text-gray-900",
+            color: "bg-white text-foreground border border-gray-200",
             buttonVariant: "outline",
         },
         {
@@ -33,7 +33,7 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "$90.000",
             description: "Para independientes",
             features: ["Alertas en tiempo real", "Filtros I.A.", "1 Usuario"],
-            color: "bg-blue-50 text-blue-900 border-blue-200",
+            color: "bg-primary/5 text-primary border border-primary/20",
             buttonVariant: "default",
         },
         {
@@ -41,7 +41,7 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "$180.000",
             description: "Equipos en crecimiento",
             features: ["Todo lo anterior", "3 Usuarios", "Análisis de Pliegos"],
-            color: "bg-blue-600 text-white shadow-xl scale-105 z-10",
+            color: "bg-primary text-white shadow-xl scale-105 z-10",
             buttonVariant: "secondary",
         },
         {
@@ -49,7 +49,7 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "$350.000",
             description: "Licitadores frecuentes",
             features: ["Todo lo anterior", "10 Usuarios", "Asesoría Jurídica (2h)"],
-            color: "bg-indigo-50 text-indigo-900 border-indigo-200",
+            color: "bg-primary/5 text-primary border border-primary/20",
             buttonVariant: "default",
         },
         {
@@ -57,7 +57,7 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "Personalizado",
             description: "Soluciones a medida",
             features: ["Usuarios Ilimitados", "API Access", "Gestor Dedicado"],
-            color: "bg-gray-900 text-white",
+            color: "bg-slate-900 text-white",
             buttonVariant: "secondary",
         },
     ];

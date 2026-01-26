@@ -86,7 +86,7 @@ export default async function Home() {
                   "Transparencia y confidencialidad garantizada."
                 ].map((item, i) => (
                   <li key={i} className="flex items-center text-foreground">
-                    <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-white text-xs">
+                    <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-primary text-xs font-bold">
                       ✓
                     </span>
                     {item}
@@ -96,8 +96,8 @@ export default async function Home() {
             </div>
             <div className="relative h-[400px] w-full overflow-hidden rounded-2xl shadow-xl">
               {/* Placeholder for About Image - could be another generated one or a solid color with pattern */}
-              <div className="absolute inset-0 bg-blue-900 flex items-center justify-center">
-                <span className="text-white/20 text-9xl font-bold">LE</span>
+              <div className="absolute inset-0 bg-primary flex items-center justify-center">
+                <span className="text-secondary/20 text-9xl font-bold select-none">LE</span>
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ export function ServiceCard({
 
             <div>
                 {Icon && (
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                         <Icon className="h-6 w-6" />
                     </div>
                 )}

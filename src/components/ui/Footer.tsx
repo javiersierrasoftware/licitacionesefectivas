@@ -8,7 +8,8 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                     {/* Brand Column */}
                     <div>
-                        <Link href="/" className="inline-block mb-3">
+                        <Link href="/" className="inline-flex items-center gap-2 mb-3">
+                            <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-8 w-auto object-contain" />
                             <span className="text-lg font-bold text-primary tracking-tight">
                                 Licitaciones<span className="text-secondary">Efectivas</span>
                             </span>

@@ -13,11 +13,12 @@ export default function LoginPage() {
         <div className="min-h-screen grid lg:grid-cols-2">
             {/* Left: Branding */}
             <div className="hidden lg:flex flex-col justify-between bg-primary p-12 text-white">
-                <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold tracking-tight">
+                <Link href="/" className="flex items-center gap-2">
+                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-12 w-auto object-contain brightness-0 invert" />
+                    <span className="text-2xl font-bold tracking-tight text-white">
                         Licitaciones<span className="text-secondary">Efectivas</span>
                     </span>
-                </div>
+                </Link>
                 <div>
                     <h1 className="text-4xl font-bold mb-4">Bienvenido al Portal de Clientes</h1>
                     <p className="text-lg text-blue-100 max-w-md">

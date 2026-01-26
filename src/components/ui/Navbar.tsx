@@ -9,7 +9,6 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-    { name: "Inicio", href: "/" },
     { name: "Planes", href: "/planes" },
     { name: "Servicios", href: "#servicios" },
     { name: "Nosotros", href: "#nosotros" },
@@ -23,13 +22,18 @@ export function Navbar({ session }: { session: Session | null }) {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
     const isDashboard = pathname?.startsWith("/dashboard");
+    const isLoginPage = pathname === "/login";
+
+    if (isLoginPage) return null;
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
                 {/* Logo */}
-                <Link href="/" className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-primary tracking-tight">
+                {/* Logo */}
+                <Link href="/" className="flex items-center gap-2">
+                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-10 w-auto object-contain" />
+                    <span className="text-xl font-bold text-primary tracking-tight hidden sm:inline-block">
                         Licitaciones<span className="text-secondary">Efectivas</span>
                     </span>
                 </Link>
