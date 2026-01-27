@@ -7,6 +7,7 @@ export interface SecopTender {
     descripci_n_del_procedimiento: string; // Correct Socrata key
     precio_base: string;
     fase: string; // Use 'fase' instead of 'estado_del_proceso'
+    estado_de_apertura_del_proceso: string; // New field for status
     fecha_de_publicacion_del: string; // Correct key
     fecha_de_publicacion?: string; // Fallback key
     modalidad_de_contratacion: string;
@@ -23,16 +24,38 @@ export async function fetchSecopOpportunities(unspscCodes: string[] = []) {
     // We remove strict date filtering to avoid issues with server time vs API time (2025 vs 2026)
     // We rely on $order DESC and $limit to get the "latest" available.
     const whereClauseParts = [
-        "(fase = 'Presentación de oferta' OR fase = 'Publicado' OR fase = 'Convocatoria')"
+        "estado_de_apertura_del_proceso = 'Abierto'"
     ];
 
     // Filter by codes if provided
     if (unspscCodes && unspscCodes.length > 0) {
         const uniqueCodes = [...new Set(unspscCodes)];
-        // Prefix with V1. as observed in dataset (e.g., V1.80111600)
-        // We search for both raw code and V1. prefixed code to be safe
-        const codesList = uniqueCodes.flatMap(c => [`'${c}'`, `'V1.${c}'`]).join(",");
-        whereClauseParts.push(`codigo_principal_de_categoria IN (${codesList})`);
+
+        // Split into "Families" (ending in 0000) and Specifics
+        const families = uniqueCodes.filter(c => c.endsWith("0000"));
+        const specifics = uniqueCodes.filter(c => !c.endsWith("0000"));
+
+        const conditions: string[] = [];
+
+        // Specific codes: Exact match (checking raw and V1 prefix)
+        if (specifics.length > 0) {
+            const codesList = specifics.flatMap(c => [`'${c}'`, `'V1.${c}'`]).join(",");
+            conditions.push(`codigo_principal_de_categoria IN (${codesList})`);
+        }
+
+        // Family codes: Use starts_with for broader match (e.g. 72100000 -> 7210...)
+        // We match V1.prefix + first 4 digits
+        if (families.length > 0) {
+            const familyConditions = families.map(c => {
+                const prefix = c.substring(0, 4); // First 4 digits
+                return `(starts_with(codigo_principal_de_categoria, 'V1.${prefix}') OR starts_with(codigo_principal_de_categoria, '${prefix}'))`;
+            });
+            conditions.push(`(${familyConditions.join(" OR ")})`);
+        }
+
+        if (conditions.length > 0) {
+            whereClauseParts.push(`(${conditions.join(" OR ")})`);
+        }
     }
 
     const params = new URLSearchParams({
@@ -83,5 +106,45 @@ export async function getSecopProcesoByRef(referencia: string): Promise<SecopTen
     } catch (error) {
         console.error("Error fetching single process:", error);
         return null;
+    }
+}
+
+export async function countSecopOpportunities(unspscCodes: string[] = []): Promise<number> {
+    const baseUrl = "https://www.datos.gov.co/resource/p6dx-8zbt.json";
+    const whereClauseParts = ["estado_de_apertura_del_proceso = 'Abierto'"];
+
+    if (unspscCodes && unspscCodes.length > 0) {
+        const uniqueCodes = [...new Set(unspscCodes)];
+        const families = uniqueCodes.filter(c => c.endsWith("0000"));
+        const specifics = uniqueCodes.filter(c => !c.endsWith("0000"));
+        const conditions: string[] = [];
+
+        if (specifics.length > 0) {
+            const codesList = specifics.flatMap(c => [`'${c}'`, `'V1.${c}'`]).join(",");
+            conditions.push(`codigo_principal_de_categoria IN (${codesList})`);
+        }
+        if (families.length > 0) {
+            const familyConditions = families.map(c => {
+                const prefix = c.substring(0, 4);
+                return `(starts_with(codigo_principal_de_categoria, 'V1.${prefix}') OR starts_with(codigo_principal_de_categoria, '${prefix}'))`;
+            });
+            conditions.push(`(${familyConditions.join(" OR ")})`);
+        }
+        if (conditions.length > 0) whereClauseParts.push(`(${conditions.join(" OR ")})`);
+    }
+
+    const params = new URLSearchParams({
+        "$where": whereClauseParts.join(" AND "),
+        "$select": "count(*)"
+    });
+
+    try {
+        const res = await fetch(`${baseUrl}?${params.toString()}`, { next: { revalidate: 0 } });
+        if (!res.ok) return 0;
+        const data = await res.json();
+        return data[0]?.count ? parseInt(data[0].count, 10) : 0;
+    } catch (error) {
+        console.error("SECOP Count Error", error);
+        return 0;
     }
 }

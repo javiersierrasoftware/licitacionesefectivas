@@ -45,6 +45,8 @@ export const commonUnspscCodes = [
     { code: "43190000", name: "Dispositivos de comunicaciones y accesorios" },
     { code: "43210000", name: "Equipos y accesorios de computadores" },
     { code: "55101500", name: "Materiales impresos (Libros, folletos)" },
+    { code: "80111600", name: "Servicios de administración de proyectos" },
+    { code: "72103300", name: "Servicios de mantenimiento y reparación de infraestructura" },
 ];
 
 export function searchUnspscCodes(query: string) {

@@ -23,7 +23,7 @@ export default async function DashboardLayout({
                         href="/dashboard"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
-                        <LayoutDashboard className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <LayoutDashboard className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium text-sm tracking-wide">Resumen</span>
                     </Link>
 
@@ -31,7 +31,7 @@ export default async function DashboardLayout({
                         href="/dashboard/opportunities"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
-                        <CheckSquare className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <CheckSquare className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium text-sm tracking-wide">Oportunidades</span>
                     </Link>
 
@@ -39,7 +39,7 @@ export default async function DashboardLayout({
                         href="/dashboard/interests"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
-                        <Star className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <Star className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium text-sm tracking-wide">Interés</span>
                     </Link>
 
@@ -51,7 +51,7 @@ export default async function DashboardLayout({
                         href="/dashboard/bidding"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
-                        <Briefcase className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <Briefcase className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium text-sm tracking-wide">Mis Procesos</span>
                     </Link>
 
@@ -67,7 +67,7 @@ export default async function DashboardLayout({
                         href="/dashboard/settings"
                         className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                     >
-                        <Settings className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <Settings className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium text-sm tracking-wide">Notificaciones</span>
                     </Link>
 
@@ -83,7 +83,7 @@ export default async function DashboardLayout({
                                 href="/dashboard/admin/analisis"
                                 className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                             >
-                                <FileText className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                                <FileText className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                                 <span className="font-medium text-sm tracking-wide">Análisis</span>
                             </Link>
 
@@ -91,7 +91,7 @@ export default async function DashboardLayout({
                                 href="/dashboard/admin/licitando"
                                 className="group flex items-center space-x-3 px-4 py-3 text-gray-600 rounded-xl hover:bg-neutral hover:text-primary transition-all duration-200"
                             >
-                                <Users className="h-5 w-5 text-gray-400 group-hover:text-primary transition-colors" />
+                                <Users className="h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
                                 <span className="font-medium text-sm tracking-wide">Licitando</span>
                             </Link>
                         </>

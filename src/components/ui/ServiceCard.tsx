@@ -8,6 +8,7 @@ interface ServiceCardProps {
     description: string;
     icon?: LucideIcon;
     href?: string;
+    linkText?: string;
     className?: string;
 }
 
@@ -16,6 +17,7 @@ export function ServiceCard({
     description,
     icon: Icon,
     href = "#",
+    linkText = "Conocer más",
     className,
 }: ServiceCardProps) {
     return (
@@ -33,10 +35,10 @@ export function ServiceCard({
                         <Icon className="h-6 w-6" />
                     </div>
                 )}
-                <h3 className="mb-2 text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                <h3 className="mb-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                     {title}
                 </h3>
-                <p className="mb-4 text-muted-foreground leading-relaxed">
+                <p className="mb-4 text-sm text-muted-foreground leading-relaxed">
                     {description}
                 </p>
             </div>
@@ -45,7 +47,7 @@ export function ServiceCard({
                 href={href}
                 className="inline-flex items-center text-sm font-semibold text-primary hover:text-secondary transition-colors"
             >
-                Conocer más
+                {linkText}
                 <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
         </div>

@@ -141,6 +141,9 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                 <input type="checkbox" className="rounded border-white/50 text-accent focus:ring-0 cursor-pointer" />
                             </div>
                         </TableHead>
+                        <TableHead className="w-[40px] text-white font-bold h-auto py-3 text-center border-r border-[#009bb8]/30 align-top text-[11px]">
+                            #
+                        </TableHead>
                         <TableHead className="text-white font-bold h-auto py-3 text-[11px] uppercase tracking-wider text-center border-r border-[#009bb8]/30 align-top min-w-[50px]">
                             Portal
                         </TableHead>
@@ -184,7 +187,7 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                 <TableBody>
                     {filteredOpportunities.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={11} className="h-24 text-center">
+                            <TableCell colSpan={12} className="h-24 text-center">
                                 No hay resultados con los filtros aplicados.
                             </TableCell>
                         </TableRow>
@@ -205,6 +208,9 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
                                     <TableRow className={`border-none ring-1 ring-inset ring-transparent hover:ring-gray-200 transition-all duration-200 hover:bg-neutral hover:shadow-sm ${rowClass}`}>
                                         <TableCell className="text-center align-middle relative py-6 border-r border-gray-50 w-[50px]">
                                             <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer" />
+                                        </TableCell>
+                                        <TableCell className="text-center align-middle py-6 border-r border-gray-50 w-[40px] text-[10px] text-gray-500 font-medium">
+                                            {index + 1}
                                         </TableCell>
                                         <TableCell className="text-center align-middle py-6 border-r border-gray-50 w-[60px]">
                                             <div className="flex justify-center">
@@ -271,7 +277,7 @@ export function OpportunitiesTable({ opportunities, initialSavedIds }: Opportuni
 
                                     {/* Action Toolbar Row */}
                                     <TableRow className={`border-b border-gray-100 hover:bg-neutral ${rowClass}`}>
-                                        <TableCell colSpan={11} className="py-2 px-6">
+                                        <TableCell colSpan={12} className="py-2 px-6">
                                             <div className="flex items-center gap-8 pl-14 opacity-80 hover:opacity-100 transition-opacity">
                                                 {/* View Documents Button */}
                                                 <Button

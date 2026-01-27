@@ -14,10 +14,7 @@ export default function LoginPage() {
             {/* Left: Branding */}
             <div className="hidden lg:flex flex-col justify-between bg-primary p-12 text-white">
                 <Link href="/" className="flex items-center gap-2">
-                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-12 w-auto object-contain brightness-0 invert" />
-                    <span className="text-2xl font-bold tracking-tight text-white">
-                        Licitaciones<span className="text-secondary">Efectivas</span>
-                    </span>
+                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-24 w-auto object-contain brightness-0 invert" />
                 </Link>
                 <div>
                     <h1 className="text-4xl font-bold mb-4">Bienvenido al Portal de Clientes</h1>

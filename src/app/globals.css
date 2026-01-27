@@ -6,17 +6,17 @@
 :root {
 
   /* Corporate Theme System (Navy & Gold) */
-  --primary: #0F2C59;
+  --primary: #222E51;
   /* Deep Navy Blue */
   --primary-foreground: #FFFFFF;
 
-  --secondary: #FFB703;
-  /* Brighter Gold/Amber */
+  --secondary: #BCA05E;
+  /* Gold/Mustard */
   --secondary-foreground: #FFFFFF;
 
-  --accent: #F8FAFC;
-  /* Light Background/White */
-  --accent-foreground: #0F2C59;
+  --accent: #E6E2D4;
+  /* Warm Cream / Grey */
+  --accent-foreground: #222E51;
 
   --neutral: #F3F4F6;
   /* Light Gray Background */

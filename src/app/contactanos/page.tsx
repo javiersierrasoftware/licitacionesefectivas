@@ -70,8 +70,7 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-gray-900">Correo Electrónico</h3>
-                                    <p className="text-muted-foreground">contacto@licitacionesefectivas.com</p>
-                                    <p className="text-muted-foreground">soporte@licitacionesefectivas.com</p>
+                                    <p className="text-muted-foreground">gerencia@licitacionesefectivas.com</p>
                                 </div>
                             </div>
 

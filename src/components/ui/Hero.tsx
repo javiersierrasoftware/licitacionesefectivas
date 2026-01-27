@@ -20,31 +20,41 @@ export function Hero() {
             </div>
 
             <div className="container relative z-10 mx-auto px-4 md:px-6">
-                <div className="flex flex-col items-start gap-6 max-w-2xl text-white">
-                    <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm font-medium backdrop-blur-sm">
-                        <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
-                        Expertos en SECOP II
+                <div className="flex flex-col items-start gap-6 max-w-4xl text-white">
+                    <div className="flex flex-wrap gap-3">
+                        <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                            <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                            Scoring de ajuste (IA)
+                        </div>
+                        <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                            <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                            Generación automática de documentos
+                        </div>
+                        <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                            <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                            Gestión integral del proceso
+                        </div>
                     </div>
 
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white drop-shadow-sm">
-                        Gana más licitaciones <br />
-                        <span className="text-secondary">con menos esfuerzo</span>
+                    <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-white drop-shadow-sm">
+                        Gana más procesos en SECOP I y II <br />
+                        <span className="text-secondary">con IA + acompañamiento experto</span>
                     </h1>
 
                     <p className="text-lg text-gray-100 md:text-xl leading-relaxed">
-                        Maximizamos tus oportunidades de negocio con el Estado. Consultoría experta, búsqueda monitoreada y gestión integral de procesos de contratación.
+                        Monitoreo + scoring de ajuste + generación de documentos + gestión del proceso. Menos riesgo, más adjudicaciones.
                     </p>
 
                     <div className="flex flex-col gap-4 sm:flex-row mt-4">
-                        <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 border-0" asChild>
-                            <Link href="#servicios">
-                                Ver Servicios
+                        <Button size="lg" className="bg-secondary text-primary hover:bg-secondary/90 border-0 font-bold" asChild>
+                            <Link href="/contactanos">
+                                Agenda diagnóstico gratis
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                         </Button>
                         <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary backdrop-blur-sm bg-white/5" asChild>
-                            <Link href="/contactanos">
-                                Agenda una Asesoría
+                            <Link href="/planes">
+                                Ver planes
                             </Link>
                         </Button>
                     </div>
@@ -56,7 +66,7 @@ export function Hero() {
                                 /* Placeholder for user avatars or success icons if needed */
                             ))}
                         </div>
-                        <p>Más de <span className="font-bold text-white">200+</span> empresas confían en nosotros</p>
+                        <p>Te mostramos oportunidades reales según tu perfil (UNSPSC/experiencia/capacidad).</p>
                     </div>
                 </div>
             </div>

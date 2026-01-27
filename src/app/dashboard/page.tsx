@@ -6,7 +6,9 @@ import dbConnect from "@/lib/db";
 import CompanyProfile from "@/lib/models/CompanyProfile";
 import SavedOpportunity from "@/lib/models/SavedOpportunity";
 import BiddingProcess from "@/lib/models/BiddingProcess";
-import { fetchSecopOpportunities } from "@/lib/services/secop";
+import { fetchSecopOpportunities, countSecopOpportunities } from "@/lib/services/secop";
+import Tender from "@/lib/models/Tender";
+import { buildTenderQuery } from "@/lib/utils/tender-query";
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ payment?: string; message?: string }> }) {
     const session = await auth();
@@ -15,15 +17,34 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     // 1. Fetch User Data & Validation
     let subscriptionStatus = 'inactive';
     let profile = null;
+    let allUnspscCodes: string[] = [];
 
     if (session?.user?.email) {
         await dbConnect();
         const User = require("@/lib/models/User").default;
+        const InterestProfile = require("@/lib/models/InterestProfile").default;
+
         const dbUser = await User.findOne({ email: session.user.email }).lean();
         subscriptionStatus = dbUser?.subscriptionStatus || 'inactive';
 
         // Fetch Profile for UNSPSC codes
         profile = await CompanyProfile.findOne({ userId: session.user.id }).lean();
+
+        // Fetch Interest Profiles
+        const interestProfiles = await InterestProfile.find({ userId: session.user.id, isActive: true }).lean();
+
+        // Aggregate Codes
+        if (profile?.unspscCodes?.length > 0) {
+            allUnspscCodes.push(...profile.unspscCodes);
+        }
+        if (interestProfiles && interestProfiles.length > 0) {
+            interestProfiles.forEach((ip: any) => {
+                if (ip.unspscCodes && ip.unspscCodes.length > 0) {
+                    allUnspscCodes.push(...ip.unspscCodes);
+                }
+            });
+        }
+        allUnspscCodes = [...new Set(allUnspscCodes)];
     }
 
     const showSuccess = payment === 'success';
@@ -34,17 +55,19 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     }
 
     // 2. Fetch Data for Statistics
-    let opportunities: any[] = [];
+    let marketCount = 0;
     let savedCount = 0;
     let activeProcessesCount = 0;
     let recentProcesses: any[] = [];
 
     try {
+        const titleQuery = allUnspscCodes.length > 0 ? buildTenderQuery(allUnspscCodes) : { _id: { $exists: false } }; // Force empty if no codes
+
         const [oppsResult, savedCountResult, activeCountResult, recentProcessesResult] = await Promise.allSettled([
-            fetchSecopOpportunities(profile?.unspscCodes || []),
-            SavedOpportunity.countDocuments({ userId: session.user.id, isFavorite: true }),
-            BiddingProcess.countDocuments({ userId: session.user.id, status: { $ne: 'CLOSED' } }), // Count all non-closed
-            BiddingProcess.find({ userId: session.user.id, status: { $ne: 'CLOSED' } })
+            allUnspscCodes.length > 0 ? Tender.countDocuments(titleQuery) : Promise.resolve(0),
+            SavedOpportunity.countDocuments({ userId: session?.user?.id, isFavorite: true }),
+            BiddingProcess.countDocuments({ userId: session?.user?.id, status: { $ne: 'CLOSED' } }),
+            BiddingProcess.find({ userId: session?.user?.id, status: { $ne: 'CLOSED' } })
                 .sort({ updatedAt: -1 })
                 .limit(5)
                 .populate('tenderId')
@@ -52,7 +75,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         ]);
 
         if (oppsResult.status === 'fulfilled') {
-            opportunities = oppsResult.value;
+            marketCount = oppsResult.value;
         }
         if (savedCountResult.status === 'fulfilled') {
             savedCount = savedCountResult.value;
@@ -68,7 +91,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     }
 
     // 3. Calculate Aggregations
-    const totalCount = opportunities.length;
+    const totalCount = marketCount;
 
     // Formatting
     const formatCurrency = (val: number) => {
@@ -177,17 +200,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                             <div className="flex-1 text-right">
                                 <p className="text-sm font-medium text-muted-foreground">Perfil</p>
                                 <h3 className="text-xl font-bold text-gray-900">
-                                    {profile?.unspscCodes?.length ? "Activo" : "General"}
+                                    {allUnspscCodes.length > 0 ? "Activo" : "General"}
                                 </h3>
                             </div>
                         </div>
                         <div className="mt-4">
                             <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
-                                <div className={`h-full rounded-full ${profile?.unspscCodes?.length ? "bg-purple-600 w-full" : "bg-gray-300 w-1/3"}`} />
+                                <div className={`h-full rounded-full ${allUnspscCodes.length > 0 ? "bg-purple-600 w-full" : "bg-gray-300 w-1/3"}`} />
                             </div>
                             <p className="text-xs text-muted-foreground mt-2">
-                                {profile?.unspscCodes?.length
-                                    ? `${profile.unspscCodes.length} filtros activos`
+                                {allUnspscCodes.length > 0
+                                    ? `${allUnspscCodes.length} filtros activos`
                                     : "Sin filtros"}
                             </p>
                         </div>

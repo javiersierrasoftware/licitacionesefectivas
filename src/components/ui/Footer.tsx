@@ -9,10 +9,7 @@ export function Footer() {
                     {/* Brand Column */}
                     <div>
                         <Link href="/" className="inline-flex items-center gap-2 mb-3">
-                            <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-8 w-auto object-contain" />
-                            <span className="text-lg font-bold text-primary tracking-tight">
-                                Licitaciones<span className="text-secondary">Efectivas</span>
-                            </span>
+                            <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-10 w-auto object-contain" />
                         </Link>
                         <p className="text-muted-foreground text-xs mb-4 leading-relaxed">
                             Facilitamos el acceso a oportunidades de contratación pública con tecnología y asesoría experta.
@@ -100,7 +97,7 @@ export function Footer() {
                             </li>
                             <li className="flex items-center">
                                 <Mail className="h-4 w-4 text-primary mr-2 shrink-0" />
-                                <span className="text-xs text-muted-foreground">contacto@licitaciones.com</span>
+                                <span className="text-xs text-muted-foreground">gerencia@licitacionesefectivas.com</span>
                             </li>
                         </ul>
                     </div>

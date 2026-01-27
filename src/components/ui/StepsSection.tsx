@@ -1,21 +1,21 @@
-import { UserPlus, CreditCard, Settings2 } from "lucide-react";
+import { Settings2, Target, FileText } from "lucide-react";
 
 export function StepsSection() {
     const steps = [
         {
-            icon: UserPlus,
-            title: "1. Regístrate",
-            description: "Crea tu cuenta en el portal para acceder a todas las funcionalidades."
-        },
-        {
-            icon: CreditCard,
-            title: "2. Elige y Paga",
-            description: "Selecciona el plan ideal para tu empresa y realiza el pago seguro con Wompi."
-        },
-        {
             icon: Settings2,
-            title: "3. Configura y Licita",
-            description: "Define tus intereses y comienza a recibir las mejores oportunidades del estado."
+            title: "1. Configuramos tu perfil",
+            description: "(UNSPSC, experiencia, capacidad, zonas)"
+        },
+        {
+            icon: Target,
+            title: "2. IA prioriza oportunidades",
+            description: "(scoring de Ajuste + alertas)"
+        },
+        {
+            icon: FileText,
+            title: "3. Generas y gestionas la oferta",
+            description: "(docs + tablero + acompañamiento)"
         }
     ];
 
@@ -23,8 +23,7 @@ export function StepsSection() {
         <section className="py-8 bg-white border-y border-gray-100">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900">¿Cómo funciona?</h2>
-                    <p className="text-muted-foreground">Tres simples pasos para empezar a ganar.</p>
+                    <h2 className="text-2xl font-bold text-gray-900">Así automatizamos tu participación</h2>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 text-center relative max-w-5xl mx-auto">
@@ -36,8 +35,8 @@ export function StepsSection() {
                             <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-primary shadow-sm border border-blue-100 z-10">
                                 <step.icon className="h-8 w-8" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed max-w-xs">{step.description}</p>
+                            <h3 className="text-lg font-bold mb-2 text-gray-900">{step.title}</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{step.description}</p>
                         </div>
                     ))}
                 </div>

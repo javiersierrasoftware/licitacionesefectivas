@@ -57,8 +57,8 @@ export function PlansSection({ plans }: PlansSectionProps) {
             price: "Personalizado",
             description: "Soluciones a medida",
             features: ["Usuarios Ilimitados", "API Access", "Gestor Dedicado"],
-            color: "bg-slate-900 text-white",
-            buttonVariant: "secondary",
+            color: "bg-accent text-accent-foreground border border-primary/10",
+            buttonVariant: "default",
         },
     ];
 

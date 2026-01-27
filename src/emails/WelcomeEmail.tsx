@@ -35,12 +35,14 @@ export const WelcomeEmail = ({
                 <Body className="bg-white my-auto mx-auto font-sans">
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
                         <Section className="mt-[32px] text-center">
-                            {/* You can add a logo here if available */}
-                            <Heading className="text-[#0284c7] text-[24px] font-normal text-center p-0 my-[30px] mx-0">
-                                Licitaciones <strong>Efectivas</strong>
-                            </Heading>
+                            <Img
+                                src={`${baseUrl}/images/logolicitaciones.PNG`}
+                                alt="Licitaciones Efectivas"
+                                width="200"
+                                className="mx-auto my-[30px]"
+                            />
                         </Section>
-                        <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
+                        <Heading className="text-[#222E51] text-[24px] font-normal text-center p-0 my-[30px] mx-0">
                             ¡Bienvenido, {name}!
                         </Heading>
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -56,14 +58,14 @@ export const WelcomeEmail = ({
                         </ul>
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Button
-                                className="bg-[#0284c7] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
+                                className="bg-[#222E51] rounded text-white text-[12px] font-bold no-underline text-center px-5 py-3"
                                 href={loginUrl}
                             >
                                 Ingresar a mi cuenta
                             </Button>
                         </Section>
                         <Text className="text-black text-[14px] leading-[24px]">
-                            Si tienes alguna pregunta, no dudes en responder a este correo.
+                            Si tienes alguna pregunta, no dudes en responder a este correo o escribir a <Link href="mailto:contacto@licitacionesefectivas.com" className="text-[#222E51] underline">contacto@licitacionesefectivas.com</Link>.
                         </Text>
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
                         <Text className="text-[#666666] text-[12px] leading-[24px]">

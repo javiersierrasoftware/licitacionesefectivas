@@ -32,10 +32,7 @@ export function Navbar({ session }: { session: Session | null }) {
                 {/* Logo */}
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-10 w-auto object-contain" />
-                    <span className="text-xl font-bold text-primary tracking-tight hidden sm:inline-block">
-                        Licitaciones<span className="text-secondary">Efectivas</span>
-                    </span>
+                    <img src="/images/logolicitaciones.PNG" alt="Licitaciones Efectivas Logo" className="h-12 w-auto object-contain" />
                 </Link>
 
                 {/* Desktop Navigation */}

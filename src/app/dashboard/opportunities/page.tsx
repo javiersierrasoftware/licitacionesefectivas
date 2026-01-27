@@ -1,3 +1,4 @@
+
 import { auth } from "@/auth";
 import dbConnect from "@/lib/db";
 import CompanyProfile from "@/lib/models/CompanyProfile";
@@ -5,6 +6,7 @@ import SavedOpportunity from "@/lib/models/SavedOpportunity";
 import InterestProfile from "@/lib/models/InterestProfile";
 import Tender from "@/lib/models/Tender";
 import { fetchSecopOpportunities, SecopTender } from "@/lib/services/secop";
+import { buildTenderQuery } from "@/lib/utils/tender-query"; // Added import
 import { getUnspscName } from "@/lib/data/unspsc-codes";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge"; // Need badge
@@ -49,65 +51,23 @@ export default async function OpportunitiesPage() {
     let savedIds = new Set<string>();
 
     try {
-        // --- SYNC START ---
-        // Automatically sync fresh data from SECOP on page load
-        // This ensures "today's" processes appear immediately
-        // Uses the aggregated list of codes
-        const freshTenders = await fetchSecopOpportunities(allUnspscCodes);
+        // --- SYNC DISABLED (User Request: Rely on Internal DB) ---
+        // To re-enable sync, uncomment the fetchSecopOpportunities logic or run it in a separate worker.
 
-        if (freshTenders.length > 0) {
-            // Helper to prevent "Invalid Date" crash
-            const safeDate = (d: string | undefined) => {
-                if (!d) return new Date(); // Default to now if missing
-                const parsed = new Date(d);
-                return isNaN(parsed.getTime()) ? new Date() : parsed;
-            };
-
-            const operations = freshTenders.map(st => {
-                // Handle URL weirdness
-                let url = "";
-                if (typeof st.urlproceso === 'string') url = st.urlproceso;
-                else if (st.urlproceso && typeof st.urlproceso === 'object') url = (st.urlproceso as any).url;
-
-                return {
-                    updateOne: {
-                        filter: { referencia_proceso: st.referencia_del_proceso },
-                        update: {
-                            $set: {
-                                referencia_proceso: st.referencia_del_proceso,
-                                entidad: st.entidad,
-                                descripcion: st.descripci_n_del_procedimiento,
-                                objeto: st.descripci_n_del_procedimiento,
-                                modalidad: st.modalidad_de_contratacion,
-                                precio_base: Number(st.precio_base),
-                                fecha_publicacion: safeDate(st.fecha_de_publicacion_del),
-                                fecha_recepcion_ofertas: st.fecha_de_recepcion_de_ofertas ? safeDate(st.fecha_de_recepcion_de_ofertas) : null,
-                                departamento: st.departamento_entidad,
-                                ciudad: st.ciudad_entidad,
-                                codigos_unspsc: st.codigo_principal_de_categoria ? [st.codigo_principal_de_categoria] : [],
-                                url_proceso: url,
-                                fase: st.fase,
-                                // raw_data: st // Optional: save raw data if needed
-                            }
-                        },
-                        upsert: true
-                    }
-                };
-            });
-            await Tender.bulkWrite(operations);
-            console.log(`Synced ${freshTenders.length} tenders from SECOP.`);
-        }
-        // --- SYNC END ---
 
         // Query Logic: Filter by UNSPSC codes if they exist in ANY profile
-        const tenderQuery: any = {};
-        if (allUnspscCodes.length > 0) {
-            tenderQuery.codigos_unspsc = { $in: allUnspscCodes };
-        }
+        const tenderQuery: any = allUnspscCodes.length > 0 ? buildTenderQuery(allUnspscCodes) : {};
 
+        console.log("Active Tender Query:", JSON.stringify(tenderQuery, null, 2));
+
+        // Use Promise.all to fetch Tenders (DB) and Saved status parallel
+        // We SKIP fetching from SECOP API to improve performance and rely on internal DB as requested.
         const [tendersResults, savedResult] = await Promise.allSettled([
-            Tender.find(tenderQuery).sort({ fecha_publicacion: -1 }).limit(100).lean(),
-            SavedOpportunity.find({ userId: session.user.id, isFavorite: true }).select('tenderId').lean(),
+            Tender.find(tenderQuery)
+                .sort({ fecha_publicacion: -1 }) // Ensure correct sort field
+                .limit(1000) // Increase limit
+                .lean(),
+            SavedOpportunity.find({ userId: session.user.id }).select('tenderId').lean()
         ]);
 
         if (tendersResults.status === 'fulfilled') {
@@ -129,6 +89,7 @@ export default async function OpportunitiesPage() {
                     modalidad_de_contratacion: t.modalidad,
                     urlproceso: t.url_proceso,
                     codigo_principal_de_categoria: t.codigos_unspsc?.[0] || "",
+                    estado_de_apertura_del_proceso: t.fase,
                     fecha_de_recepcion_de_ofertas: t.fecha_recepcion_ofertas?.toISOString()
                 };
             });
